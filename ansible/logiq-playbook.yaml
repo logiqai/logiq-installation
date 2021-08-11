@@ -1,0 +1,40 @@
+- name: Logiq microk8s install
+  hosts: localhost
+  tasks:
+        - name: Update all packages
+          apt:
+               update_cache: true
+               cache_valid_time: 3600
+               force_apt_get: true
+               upgrade: yes
+
+        - name: InstallMicrok8s
+          snap:
+                name: microk8s
+                classic: true 
+
+        - name: Create kube config file
+          shell: microk8s kubectl config view --raw > $HOME/.kube/config
+
+        - name: Install Helm
+          snap: 
+               name: helm
+               classic: true
+
+        - name: enable microk8s addons and install Logiq
+          command: "{{item}}"
+          with_items:
+                  -  microk8s enable helm
+                  -  microk8s enable storage
+                  -  microk8s enable dns
+                  -  microk8s enable ingress
+                  -  microk8s enable registry
+                  -  sudo apt-get install apt-transport-https --yes
+                  -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/cm.yaml
+                  -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/daemonset.yaml
+                  -  microk8s kubectl apply -f ./cm.yaml
+                  -  microk8s kubectl apply -f ./daemonset.yaml
+                  -  helm repo add logiq-repo https://logiqai.github.io/helm-charts
+                  -  helm repo update
+                  -  microk8s kubectl create namespace logiq
+                  -  helm upgrade --install logiq --namespace logiq -f ./values.microk8s.yaml logiq-repo/logiq --timeout 15m --debug
