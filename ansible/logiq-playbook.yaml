@@ -29,6 +29,7 @@
                   -  microk8s enable dns
                   -  microk8s enable ingress
                   -  microk8s enable registry
+                  -  microk8s enable metrics-server
                   -  sudo apt-get install apt-transport-https --yes
                   -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/cm.yaml
                   -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/daemonset.yaml
