@@ -18,7 +18,7 @@ In order to use this playbook, you'll need:
 To install LOGIQ using this playbook, do the following.
 
 1. Clone this repository. 
-2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml).
+2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml). if you are using bare-metal cluster, MetalLB is needed to allocate an IP, use the [values.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.yaml)
 3. In the `values.microk8s.yaml` file, add the below fields global-> environment section with your own values. 
    - `s3_bucket`: `<your-s3-bucket>`
    - `AWS_ACCESS_KEY_ID`: `<your-aws-access-key-id>`
