@@ -23,8 +23,10 @@ To install LOGIQ using this playbook, do the following.
    - `s3_bucket`: `<your-s3-bucket>`
    - `AWS_ACCESS_KEY_ID`: `<your-aws-access-key-id>`
    - `AWS_SECRET_ACCESS_KEY`: `<your-aws-secret-access-key-id>`
+   
    In the global -> chart section, toggle the S3_gateway to false.
    - `s3gateway`: `false`
+  
 4. Run the following command.
     ```
     ansible-playbook logiq-playbook.yaml
