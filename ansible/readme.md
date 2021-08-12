@@ -18,8 +18,8 @@ In order to use this playbook, you'll need:
 To install LOGIQ using this playbook, do the following.
 
 1. Clone this repository. 
-2. Download the `values.microk8s.yaml` file from this [GitHub Gist](https://gist.github.com/ajit-logiq/9c071c288f10f704ca02638affd65a78#file-values-microk8s-yaml).
-3. In the `values.microk8s.yaml` file, replace the values in the following fields with your own values. 
+2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml).
+3. In the `values.microk8s.yaml` file, add the below fields global-> envronment section with your own values. 
    - `s3_bucket`: `<your-s3-bucket>`
    - `AWS_ACCESS_KEY_ID`: `<your-aws-access-key-id>`
    - `AWS_SECRET_ACCESS_KEY`: `<your-aws-secret-access-key-id>`
