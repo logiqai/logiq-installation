@@ -27,6 +27,7 @@ To install LOGIQ using this playbook, do the following.
    
    In the global -> chart section, change S3gateway to false.
    - `s3gateway`: `false`
+ 
    In the global -> persistence section, change storageClass as below.    
    - `storageClass: microk8s-hostpath`
   
