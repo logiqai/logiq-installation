@@ -18,7 +18,8 @@ In order to use this playbook, you'll need:
 To install LOGIQ using this playbook, do the following.
 
 1. Clone this repository. 
-2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml). if you are using bare-metal cluster and using MetalLB to allocate an IP, use the [values.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.yaml)
+2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml).
+   > To provision a public IP instead, you may need to enable a bare-metal load balancer like MetalLB. Use the [values.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.yaml) instead.
 3. In the `values.microk8s.yaml` file, add the below fields global-> environment section with your own values. 
    - `s3_bucket`: `<your-s3-bucket>`
    - `AWS_ACCESS_KEY_ID`: `<your-aws-access-key-id>`
@@ -35,7 +36,13 @@ To install LOGIQ using this playbook, do the following.
     ```
     ifconfig
     ```
-6. Navigate to `http://<your-ip>/` or `http://localhost` to access the LOGIQ UI. 
+6. Optionally, if you are provisioning public IP, run the following command.
+   ```
+    microk8s enable metallb
+    Enabling MetalLB
+    Enter each IP address range delimited by comma (e.g.  '10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'): 192.168.1.27-192.168.1.27
+   ```
+7. Navigate to `http://<your-ip>/` or `http://localhost` to access the LOGIQ UI. 
 
 
 ![image](https://user-images.githubusercontent.com/67860971/129042112-8748275a-697e-4faa-9db1-cb515bb6ec6c.png)
