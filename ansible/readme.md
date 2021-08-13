@@ -28,7 +28,7 @@ To install LOGIQ using this playbook, do the following.
    In the global -> chart section, change S3gateway to false.
    - `s3gateway`: `false`
   
-4. Run the following command.
+4. Run the following command (ensure that values.microk8s.yaml prepared in present in the same folder)
     ```
     ansible-playbook logiq-playbook.yaml
     ```
