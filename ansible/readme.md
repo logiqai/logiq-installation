@@ -36,11 +36,11 @@ To install LOGIQ using this playbook, do the following.
     ```
     ifconfig
     ```
-6. Optionally, if you are provisioning public IP, run the following command.
+6. Optionally, if you are provisioning public IP using Metallb, run the following command.
    ```
     microk8s enable metallb
     Enabling MetalLB
-    Enter each IP address range delimited by comma (e.g.  '10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'): 192.168.1.27-192.168.1.27
+    Enter each IP address range delimited by comma (e.g.  '10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'): 192.168.1.27-192.168.1.27 (public IP range)
    ```
 7. Navigate to `http://<your-ip>/` or `http://localhost` to access the LOGIQ UI. 
 
