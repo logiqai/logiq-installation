@@ -153,7 +153,7 @@ flash-coffee:
   coffee:
     replicaCount: 1
     image:
-      tag: brew.2.1.17.12
+      tag: brew.2.1.17.21
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -164,7 +164,7 @@ flash-coffee:
   coffee_worker:
     replicaCount: 4
     image:
-      tag: brew.2.1.17.12
+      tag: brew.2.1.17.21
       pullPolicy: IfNotPresent
     resources:
       requests:
