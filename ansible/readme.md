@@ -19,7 +19,7 @@ To install LOGIQ using this playbook, do the following.
 
 1. Clone this repository. 
 2. Download the `values.microk8s.yaml` file from this [values.microk8s.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.microk8s.yaml).
-   > To provision a public IP instead, you may need to enable a bare-metal load balancer like MetalLB. Use the [values.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.yaml) instead.
+   > To provision a public IP instead (E2E networks/ bare metal VM instance), you may need to enable a bare-metal load balancer like MetalLB. Use the [values.yaml](https://github.com/logiqai/logiq-installation/blob/main/values/values.yaml) instead.
 3. In the `values.microk8s.yaml` file, add the below fields global-> environment section with your own values. 
    - `s3_bucket`: `<your-s3-bucket>`
    - `AWS_ACCESS_KEY_ID`: `<your-aws-access-key-id>`
@@ -36,7 +36,7 @@ To install LOGIQ using this playbook, do the following.
     ```
     ifconfig
     ```
-6. Optionally, if you are provisioning public IP using Metallb, run the following command.
+   > Optionally, if you are provisioning public IP using Metallb as part of step-2, run the following command.
    ```
     microk8s enable metallb
     Enabling MetalLB
