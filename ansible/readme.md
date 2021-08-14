@@ -1,6 +1,6 @@
 # Ansible playbook for installing LOGIQ on Ubuntu using MicroK8s
 
-This repository contains the Ansible playbook that helps you install LOGIQ on Ubuntu using MicroK8s. This playbook will help you deploy LOGIQ faster on your Ubuntu machines than the traditional way of using Helm charts.  
+This repository contains the Ansible playbook that helps you install LOGIQ on Debian (Ubuntu) using MicroK8s. This playbook will help you deploy LOGIQ faster on your Ubuntu machines than the traditional way of using Helm charts.  
 
 ## Prerequisites
 
