@@ -1,5 +1,6 @@
 - name: Logiq microk8s install
-  hosts: localhost
+  hosts: logiqhost 
+  remote_user: root
   tasks:
         - name: Update all packages
           apt:
@@ -28,6 +29,14 @@
         - name: Create kube config file
           shell: microk8s kubectl config view --raw > $HOME/.kube/config
 
+        - name: Copy values from local to remote
+          copy:
+            src: values.microk8s.yaml
+            dest: /root
+          tags:
+              - values
+
+
         - name: enable microk8s addons and install Logiq
           command: "{{item}}"
           with_items:
@@ -36,6 +45,7 @@
                   -  microk8s enable dns
                   -  microk8s enable ingress
                   -  microk8s enable registry
+                  -  microk8s enable metrics-server
                   -  sudo apt-get install apt-transport-https --yes
                   -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/cm.yaml
                   -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/daemonset.yaml
@@ -44,4 +54,10 @@
                   -  helm repo add logiq-repo https://logiqai.github.io/helm-charts
                   -  helm repo update
                   -  microk8s kubectl create namespace logiq
-                  - helm upgrade --install logiq --namespace logiq -f ./values.microk8s.yaml logiq-repo/logiq --timeout 15m --debug
+          tags:
+             - addons
+
+        - name: Helm install logiq 
+          command: helm upgrade --install logiq --namespace logiq -f ./values.microk8s.yaml logiq-repo/logiq --timeout 15m --debug
+          tags:
+              - helm
