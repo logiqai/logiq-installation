@@ -1,5 +1,5 @@
 - name: Logiq microk8s install
-  hosts: logiqhost 
+  hosts: localhost 
   remote_user: root
   tasks:
         - name: Update all packages
