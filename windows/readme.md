@@ -38,3 +38,4 @@ Windows logs to Logiq.
 
 -  Windows -> Run -> services.msc  you should see a Fluent-bit service running
 
+![Windows](https://user-images.githubusercontent.com/67860971/132339749-43cd8404-ba6a-412e-911a-00b1b9e07fd5.png)
