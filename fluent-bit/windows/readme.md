@@ -3,7 +3,7 @@ Windows logs to Logiq.
 - Download the repository
 - Create a temporary folder (D:/test)
 - Navigate to folder created
-- Download fluent-bit.conf file in the same folder from docs.logiq.ai and configure the output to your own Logiq cluster.
+- Download fluent-bit.conf file in the same folder from docs.logiq.ai(https://docs.logiq.ai/logiq-server/agentless#fluent-bit-for-windows) and configure the output to your own Logiq cluster.
 ```
   [OUTPUT]
     Name          http
