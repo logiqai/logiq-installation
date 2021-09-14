@@ -8,8 +8,8 @@
   ./td-agent-bit.sh
 ```
    - script will do the below
-     -  Install fluent-bit
-     - 
+     - Install fluent-bit
+     - Checks your OS-versiona and updates the sources.list as per https://docs.fluentbit.io/manual/installation/linux/ubuntu  
      - Rsyslog will be configured to add omfwd as below.
      ```
        *.* action(type="omfwd"
@@ -40,3 +40,6 @@
   systemctl start td-agent-bit
   systemctl restart rsyslog
 ```
+- you should see Logs load up in the Linux:Linux1 namespace on Logiq.
+![linux](https://user-images.githubusercontent.com/67860971/133257871-58663332-995c-4849-9638-8fe96826296a.png)
+
