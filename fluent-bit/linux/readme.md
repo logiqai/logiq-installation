@@ -10,6 +10,10 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
 3. Execute the script by running the following command.
   ```
   ./td-agent-bit.sh
+  
+  or
+  
+  bash td-agent-bit.sh
   ```
 
 The script execution carries out the following:
