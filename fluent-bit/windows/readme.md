@@ -1,26 +1,26 @@
 Windows logs to Logiq.
 
-- Check your connectivity to your cluster by sending a http payload to your client using the below curl command on Windows
+- Check your connectivity to your cluster by sending a http payload to your client using the below Invoke-Restmethod on Windows
 - Launch your Powershell and execute the below to set variables. Please ensure to change the "@timestamp" below to match the current date and time.
 ```
-   $body = @{"message"="LOGIQ Json services are up"
+  $body = @{"message"="LOGIQ Json services are up"
          "@timestamp"="2021-09-23T06:25:18Z"
          "host"="curl_host"
          "proc_id"="json-batch-test"
          "app_name"="curl"
          "namespace"="windows-curl-namespace"
          "cluster_id"="logiq-json-batch-test"
-} | ConvertTo-Json
+   }  | ConvertTo-Json
 
-$header = @{
- "Accept"="application/json"
- "Authorization"="Bearer <token>"
- "Content-Type"="application/json"
-} 
+ $header = @{
+         "Accept"="application/json"
+         "Authorization"="Bearer <token>"
+         "Content-Type"="application/json"
+       } 
 ```
 - Execute the below method to send the payload to your logiq endpoint.
 ```
-Invoke-RestMethod -Uri " https://<logiq endpoint>/v1/json_batch" -Method 'Post' -Body $body -Headers $header | ConvertTo-HTML
+  Invoke-RestMethod -Uri " https://<logiq endpoint>/v1/json_batch" -Method 'Post' -Body $body -Headers $header | ConvertTo-HTML
 ```
 - Download the repository
 - Create a temporary folder (D:/test)
