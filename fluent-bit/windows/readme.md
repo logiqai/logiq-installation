@@ -22,7 +22,7 @@ Windows logs to Logiq.
 ```
   Invoke-RestMethod -Uri " https://<logiq endpoint>/v1/json_batch" -Method 'Post' -Body $body -Headers $header | ConvertTo-HTML
 ```
-- Download the repository
+- If you are able to send the payload using the above steps, download this repository on your machine.
 - Create a temporary folder (D:/test)
 - Navigate to folder created
 - Download fluent-bit.conf file in the same folder from docs.logiq.ai(https://docs.logiq.ai/logiq-server/agentless#fluent-bit-for-windows) and configure the output to your own Logiq cluster.
