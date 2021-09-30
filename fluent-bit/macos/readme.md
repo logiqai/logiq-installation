@@ -6,8 +6,24 @@ In order to forward Mac-OS logs to LOGIQ by leveraging Fluent Bit, do the follow
   ```
    brew install fluent-bit
   ```
-2. Download the [fluent-bit conf](https://fluent-test-conf.s3.amazonaws.com/fluent-bit.conf) file, add the below section and place it in the /etc/fluent-bit installation location.
+2. Download the [fluent-bit-macos conf](https://fluent-test-conf.s3.amazonaws.com/fluent-bit-macos.conf) file, add the below section and place it in the /etc/fluent-bit installation location.
 ```
+For https endpoint, use the below.
+
+    [OUTPUT]
+        name     http
+        match    *
+        host     <Logiq endpoint>
+        port     443
+        URI      /v1/json_batch
+        Format   json
+        tls      on
+        tls.verify  off
+        net.keepalive  off
+        compress      gzip
+        Header Authorization Bearer <token>
+
+For http endpoint, use the below
    [OUTPUT]
       Name          http
       Match         *
