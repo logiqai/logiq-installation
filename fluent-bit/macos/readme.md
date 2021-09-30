@@ -6,7 +6,7 @@ In order to forward Mac-OS logs to LOGIQ by leveraging Fluent Bit, do the follow
   ```
    brew install fluent-bit
   ```
-2. Download the [fluent-bit-macos conf](https://fluent-test-conf.s3.amazonaws.com/fluent-bit-macos.conf) file, add the below section and place it in the /etc/fluent-bit installation location.
+2. Download the [fluent-bit-macos conf](https://fluent-test-conf.s3.amazonaws.com/fluent-bit-macos.conf) file, rename the file to fluent-bit.conf and add the below section and place it in the /opt/homebrew/Cellar/fluent-bit/1.8.7/etc/fluent-bit/ installation location.
 ```
 For https endpoint, use the below.
 
