@@ -21,7 +21,7 @@ In order to forward Mac-OS logs to LOGIQ by leveraging Fluent Bit, do the follow
       compress      gzip
       Header Authorization Bearer ${LOGIQ_TOKEN}
 ```   
-3. In the parsers file, add the below to parse the log lines streaming from Mac-OS.
+3. In the parsers file(/opt/homebrew/Cellar/fluent-bit/1.8.7/etc/fluent-bit/parsers.conf), add the below to parse the log lines streaming from Mac-OS.
 ```
    [PARSER] 
        Name        syslog-mac
@@ -45,4 +45,4 @@ In order to forward Mac-OS logs to LOGIQ by leveraging Fluent Bit, do the follow
 <img width="669" alt="Screenshot 2021-09-28 at 3 50 56 PM" src="https://user-images.githubusercontent.com/67860971/135070273-b930def1-000a-4a2f-bca7-c43f4f682115.png">
 
 
-You should now see your Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
+You should now see your macOS logs being ingested into the `macOS:macOS` namespace on your LOGIQ UI. 
