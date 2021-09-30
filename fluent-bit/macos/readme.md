@@ -53,7 +53,7 @@ For http endpoint, use the below
 ```
 5. If you intend to make Fluent-bit a service. Go to Finder -> Automator -> Application
    <img width="542" alt="Screenshot 2021-09-28 at 3 44 50 PM" src="https://user-images.githubusercontent.com/67860971/135069875-735cf52d-4a25-4985-9826-c31d9283353c.png">
-6. Copy paste the from the installation folder and create an application.
+6. Copy paste the from the installation folder and create an application(extension of the script should .app)
 
 <img width="1358" alt="Screenshot 2021-09-28 at 3 48 49 PM" src="https://user-images.githubusercontent.com/67860971/135070235-5ce808e6-d462-404f-81a3-b9c0f9e4eaef.png">
 
