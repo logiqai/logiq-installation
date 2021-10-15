@@ -1,6 +1,10 @@
-# Forwarding Linux logs to LOGIQ using Fluent Bit
+# Forwarding Amazon-Linux logs to LOGIQ using Fluent Bit
 
-In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the following. 
+This script is split in 2 parts.
+- Installs Node-exporter, which exposes various metrices from your Linux machine(CPU, RAM usage)
+- Installs Fluent-bit on your Amazon-linux systems which is used for Log forwarding to Logiq.
+
+In order to install node-exporter and fluent bit to forward Linux logs, do the following. 
 
 1. Download the `install.sh` script from this folder. 
 2. Make the script executable by running the following command. 
@@ -17,6 +21,7 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
   ```
 
 The script execution carries out the following:
+- Installs Node-exporter(optional)
 - Installs Fluent Bit
 - Checks your OS versions and updates your sources list, as mentioned in the [Fluent Bit documentation](https://docs.fluentbit.io/manual/installation/linux/ubuntu#update-your-sources-lists). 
 - Configures Rsyslog to add `omfwd`, as shown below.
