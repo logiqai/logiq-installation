@@ -1,27 +1,27 @@
 # Forwarding Amazon-Linux logs to LOGIQ using Fluent Bit
 
-This script is split in 2 parts.
-- Installs Node-exporter, which exposes various metrices from your Linux machine(CPU, RAM usage)
-- Installs Fluent-bit on your Amazon-linux systems which is used for Log forwarding to Logiq.
+The script `install.sh` included in this folder carries out the following functions:
+- Installs Node Exporter, which exposes various metrices from your Linux machine(CPU, RAM usage)
+- Installs Fluent Bit on your Amazon-linux systems which is used for forwarding logs to LOGIQ.
 
-In order to install node-exporter and fluent bit to forward Linux logs, do the following. 
+In order to install Node Exporter and Fluent Bit to forward Linux logs, do the following. 
 
 1. Download the `install.sh` script from this folder. 
 2. Make the script executable by running the following command. 
   ```
   chmod +x install.sh
   ```
-3. Execute the script by running the following command.
+3. Execute the script by running either of the following commands.
   ```
   sudo ./install.sh
-  
-  or
-  
+  ```
+  Or,
+  ```
   sudo bash install.sh
   ```
 
-The script execution carries out the following:
-- Installs Node-exporter(optional)
+The script executes and carries out the following:
+- Installs Node Exporter (optional)
 - Installs Fluent Bit
 - Checks your OS versions and updates your sources list, as mentioned in the [Fluent Bit documentation](https://docs.fluentbit.io/manual/installation/linux/ubuntu#update-your-sources-lists). 
 - Configures Rsyslog to add `omfwd`, as shown below.
@@ -35,7 +35,7 @@ The script execution carries out the following:
            )
   ```
   
-The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
+The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Be sure to configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
   
 ```
 [OUTPUT]
@@ -58,7 +58,7 @@ systemctl start td-agent-bit
 systemctl restart rsyslog
 ```
 
-You should now see your Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
+You should now see your Amazon-Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
 
 ![linux](https://user-images.githubusercontent.com/67860971/133257871-58663332-995c-4849-9638-8fe96826296a.png)
 
