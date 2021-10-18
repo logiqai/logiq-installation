@@ -12,7 +12,8 @@
         - name: InstallMicrok8s
           snap:
                 name: microk8s
-                classic: true 
+                classic: true
+                channel: "1.21/stable"
 
         - name: Install Helm
           snap: 
