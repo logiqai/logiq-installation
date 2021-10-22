@@ -6,7 +6,13 @@ This repository contains the Ansible playbook that helps you install LOGIQ on De
 
 In order to use this playbook, you'll need:
 
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- Ubunut 20.04 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+  Ubuntu 18.04 
+  ```
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt update
+    sudo apt install ansible
+  ```
 - Ensure that no application is running on port 80. To check this, run the following command to find and kill the application running on port 80. 
   
   ```
