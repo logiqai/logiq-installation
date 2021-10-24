@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 code_name=`lsb_release -a|grep -i codename`
 cleaned_code=`echo $code_name| cut -d':' -f2|sed 's/ //g'`
 
@@ -8,7 +8,8 @@ focal_entry="deb https://packages.fluentbit.io/ubuntu/focal focal main"
 bionic_entry="deb https://packages.fluentbit.io/ubuntu/bionic bionic main"
 xenial_entry="deb https://packages.fluentbit.io/ubuntu/xenial xenial main"
 filename="/etc/apt/sources.list"
-wget -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
+echo "Acquire::https::packages.fluentbit.io::Verify-Peer \"false\";" >> /etc/apt/apt.conf.d/99influxdata-cert
+wget  -qO - https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -
 if [[ "$cleaned_code" =~ .*"focal".* ]]; then
   echo "Ubuntu Focal."
   echo $focal_entry >> $filename
@@ -17,7 +18,7 @@ elif [[ "$cleaned_code" =~ .*"bionic".* ]]; then
    echo $bionic_entry >> $filename
 elif [[ "$cleaned_code" =~ .*"xenial".* ]]; then
    echo "Ubuntu Xenial "
-   echo $xeial_entry >> $filename
+   echo $xenial_entry >> $filename
 fi
 
 sudo apt-get update -y
