@@ -1,0 +1,53 @@
+- name: Logiq microk8s install
+  hosts: localhost 
+  remote_user: root
+  tasks:
+        - name: InstallMicrok8s
+          become: yes
+          snap:
+                name: microk8s
+                classic: true
+                channel: "1.21/stable"
+
+        - name: Install Helm
+          become: yes
+          snap: 
+               name: helm
+               classic: true
+
+        - name: Creates directory
+          file:
+                path: "{{ item }}"
+                state: directory
+          with_items:
+          - $HOME/.kube
+
+        - name: Create kube config file
+          shell: microk8s kubectl config view --raw > $HOME/.kube/config
+
+
+        - name: enable microk8s addons and install Logiq
+          command: "{{item}}"
+          become: yes
+          with_items:
+                  -  microk8s enable helm
+                  -  microk8s enable storage
+                  -  microk8s enable dns
+                  -  microk8s enable ingress
+                  -  microk8s enable registry
+                  -  microk8s enable metrics-server
+                  -  sudo apt-get install apt-transport-https --yes
+                  -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/cm.yaml
+                  -  wget https://logiqmicrok8s-vm.s3.amazonaws.com/daemonset.yaml
+                  -  microk8s kubectl apply -f ./cm.yaml
+                  -  microk8s kubectl apply -f ./daemonset.yaml
+                  -  helm repo add logiq-repo https://logiqai.github.io/helm-charts
+                  -  helm repo update
+                  -  microk8s kubectl create namespace logiq
+          tags:
+             - addons
+
+        - name: Helm install logiq 
+          command: helm upgrade --install logiq --namespace logiq -f ./values.yaml logiq-repo/logiq --timeout 15m --debug
+          tags:
+              - helm
