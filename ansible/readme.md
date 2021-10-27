@@ -6,9 +6,9 @@ This repository contains the Ansible playbook that helps you install LOGIQ on De
 
 In order to use this playbook, you'll need:
 
-- Ubunut 20.04 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- Ubuntu 20.04 - Please follow instructions on the [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) for installation.
  
-  Ubuntu 18.04 
+  Ubuntu 18.04 - Please follow the below instructions for installation.
   ```
     sudo apt-add-repository ppa:ansible/ansible
     sudo apt update
@@ -38,11 +38,29 @@ To install LOGIQ using this playbook, do the following.
    In the global -> persistence section, change storageClass as below.    
    - `storageClass: microk8s-hostpath`
   
+
+Files
+Type
+Name
+Latest commit message
+Commit time
+an
 4. Run the following command (ensure that values.microk8s.yaml prepared in present in the same folder)
     ```
-    ansible-playbook logiq-playbook.yaml
+    For Ubuntu 20.04:
+    ansible-playbook logiq-playbook.20.yaml
+    
+    For Ubuntu 18.04:
+    ansible-playbook logiq-playbook.18.yaml
     ```
 5. Once the Ansible script has been executed, find your IP by running the following command. 
+
+Files
+Type
+Name
+Latest commit message
+Commit time
+an
     ```
     ifconfig
     ```
