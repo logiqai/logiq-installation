@@ -48,6 +48,6 @@
              - addons
 
         - name: Helm install logiq 
-          command: helm upgrade --install logiq --namespace logiq -f ./values.yaml logiq-repo/logiq --timeout 15m --debug
+          command: helm upgrade --install logiq --namespace logiq -f ./values.microk8s.yaml logiq-repo/logiq --timeout 15m --debug
           tags:
               - helm
