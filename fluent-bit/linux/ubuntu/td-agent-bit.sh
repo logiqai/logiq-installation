@@ -24,8 +24,21 @@ fi
 sudo apt-get update -y
 sudo apt-get install td-agent-bit -y
 wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
-sed -i "s/<Token>/$MY_TOKEN/g" fluent-bit-linux.conf
-sed -i "s/<logiq endpoint>/$LOGIQ/g" fluent-bit-linux.conf
+
+if [ -z "$MY_TOKEN" ]
+then
+   echo "Logiq_token not set"
+else
+   sed -i "s/<Token>/$MY_TOKEN/g" fluent-bit-linux.conf
+fi
+
+if [ -z "$LOGIQ" ]
+then
+   echo "Logiq endpoint not set"
+else
+   sed -i "s/<logiq endpoint>/$LOGIQ/g" fluent-bit-linux.conf
+fi
+
 mv fluent-bit-linux.conf /etc/td-agent-bit/td-agent-bit.conf
 echo "*.* action(type=\"omfwd\"
            queue.type=\"LinkedList\"
