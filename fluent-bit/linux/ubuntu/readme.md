@@ -30,23 +30,42 @@ The script execution carries out the following:
            )
   ```
   
-The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
-  
-```
-[OUTPUT]
-    Name          http
-    Match         *
-    Host          localhost
-    Port          80
-    URI           /v1/json_batch
-    Format        json
-    tls           off
-    tls.verify    off
-    net.keepalive off
-    compress      gzip
-    Header Authorization Bearer ${LOGIQ_TOKEN}
-```
+- The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
 
+       For HTTP endpoint
+       ```
+       [OUTPUT]
+          Name          http
+          Match         *
+          Host          localhost
+          Port          80
+          URI           /v1/json_batch
+          Format        json
+          tls           off
+          tls.verify    off
+          net.keepalive off
+          compress      gzip
+          Header Authorization Bearer ${LOGIQ_TOKEN}
+       ```
+
+       For HTTPS endpoint
+       ```
+         export LOGIQ="example.logiq.ai"
+         export MY_TOKEN="Your Token"
+
+         [OUTPUT]
+          name     http
+          match    *
+          host     <logiq endpoint>
+          port     443 
+          URI      /v1/json_batch
+          Format   json
+          tls      on
+          tls.verify  off
+          net.keepalive  off
+          compress      gzip
+          Header Authorization Bearer <Token>  
+       ```
 Now that the configuration is complete, run the following commands to start Fluent Bit and Rsyslog.
 ```
 systemctl start td-agent-bit
