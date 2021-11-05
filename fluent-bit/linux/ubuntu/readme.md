@@ -7,13 +7,25 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
   ```
   chmod +x td-agent-bit.sh
   ```
-3. Execute the script by running the following command.
+3. Set the cluster details
   ```
-  sudo ./td-agent-bit.sh
+  export LOGIQ="example.logiq.ai"
+  export MY_TOKEN=<Your Token>
+  ```
+4. Execute the script by running the following command.
+  ```
+  HTTP endpoint:
+  sudo -E ./td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo -E ./td-agent-bit.sh "https"
   
   or
+  HTTP endpoint:
+  sudo bash td-agent-bit.sh "http"
   
-  sudo bash td-agent-bit.sh
+  HTTPS endpoint:
+  sudo bash td-agent-bit.sh "https"
   ```
 
 The script execution carries out the following:
@@ -30,28 +42,39 @@ The script execution carries out the following:
            )
   ```
   
-The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
-  
-```
-[OUTPUT]
-    Name          http
-    Match         *
-    Host          localhost
-    Port          80
-    URI           /v1/json_batch
-    Format        json
-    tls           off
-    tls.verify    off
-    net.keepalive off
-    compress      gzip
-    Header Authorization Bearer ${LOGIQ_TOKEN}
-```
+- The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit` as shown below for http and https endpoints.
 
-Now that the configuration is complete, run the following commands to start Fluent Bit and Rsyslog.
-```
-systemctl start td-agent-bit
-systemctl restart rsyslog
-```
+       For HTTP endpoint
+       
+       [OUTPUT]
+          Name          http
+          Match         *
+          Host          localhost
+          Port          80
+          URI           /v1/json_batch
+          Format        json
+          tls           off
+          tls.verify    off
+          net.keepalive off
+          compress      gzip
+          Header Authorization Bearer ${LOGIQ_TOKEN}
+       
+
+       For HTTPS endpoint
+       
+         [OUTPUT]
+          name     http
+          match    *
+          host     <logiq endpoint>
+          port     443 
+          URI      /v1/json_batch
+          Format   json
+          tls      on
+          tls.verify  off
+          net.keepalive  off
+          compress      gzip
+          Header Authorization Bearer <Token>  
+       
 
 You should now see your Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
 
