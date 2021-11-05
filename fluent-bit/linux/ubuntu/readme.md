@@ -12,7 +12,7 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
   export LOGIQ="example.logiq.ai"
   export MY_TOKEN=<Your Token>
   ```
-5. Execute the script by running the following command.
+4. Execute the script by running the following command.
   ```
   HTTP endpoint:
   sudo -E ./td-agent-bit.sh "http"
