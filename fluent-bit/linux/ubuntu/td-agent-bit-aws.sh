@@ -23,7 +23,15 @@ fi
 
 sudo apt-get update -y
 sudo apt-get install td-agent-bit -y --allow-unauthenticated
-wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
+
+if [ $1 = "http" ]
+then
+   wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux-http.conf
+   sudo  mv fluent-bit-linux-http.conf fluent-bit-linux.conf
+else
+   wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
+fi
+
 if [ -z "$MY_TOKEN" ]
 then
    echo "Logiq_token not set"
@@ -46,3 +54,6 @@ echo "*.* action(type=\"omfwd\"
            queue.saveonshutdown=\"on\"
            target=\"127.0.0.1\" Port=\"5140\" Protocol=\"tcp\"
            )">>/etc/rsyslog.conf
+
+systemctl restart rsyslog
+systemctl restart td-agent-bit

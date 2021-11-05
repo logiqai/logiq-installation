@@ -23,7 +23,15 @@ fi
 
 sudo apt-get update -y
 sudo apt-get install td-agent-bit -y
-wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
+
+if [ $1 = "http" ]
+then 
+   wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux-http.conf
+   sudo  mv fluent-bit-linux-http.conf fluent-bit-linux.conf
+else 
+   wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
+fi
+
 
 if [ -z "$MY_TOKEN" ]
 then
@@ -39,7 +47,7 @@ else
    sed -i "s/<logiq endpoint>/$LOGIQ/g" fluent-bit-linux.conf
 fi
 
-mv fluent-bit-linux.conf /etc/td-agent-bit/td-agent-bit.conf
+sudo mv fluent-bit-linux.conf /etc/td-agent-bit/td-agent-bit.conf
 echo "*.* action(type=\"omfwd\"
            queue.type=\"LinkedList\"
            action.resumeRetryCount=\"-1\"
@@ -47,3 +55,6 @@ echo "*.* action(type=\"omfwd\"
            queue.saveonshutdown=\"on\"
            target=\"127.0.0.1\" Port=\"5140\" Protocol=\"tcp\"
            )">>/etc/rsyslog.conf
+
+systemctl restart rsyslog
+systemctl restart td-agent-bit
