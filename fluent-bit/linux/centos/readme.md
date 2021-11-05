@@ -7,9 +7,25 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
   ```
   chmod +x td-agent-bit.sh
   ```
-3. Execute the script by running the following command.
+ 3. Set the cluster details
   ```
-  ./td-agent-bit.sh
+  export LOGIQ="example.logiq.ai"
+  export MY_TOKEN=<Your Token>
+  ```
+4. Execute the script by running the following command.
+  ```
+  HTTP endpoint:
+  sudo -E ./td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo -E ./td-agent-bit.sh "https"
+  
+  or
+  HTTP endpoint:
+  sudo bash td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo bash td-agent-bit.sh "https"
   ```
 
 The script execution carries out the following:
