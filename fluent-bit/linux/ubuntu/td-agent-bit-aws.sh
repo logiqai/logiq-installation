@@ -24,6 +24,8 @@ fi
 sudo apt-get update -y
 sudo apt-get install td-agent-bit -y --allow-unauthenticated
 wget https://fluent-test-conf.s3.amazonaws.com/fluent-bit-linux.conf
+sed -i "s/<Token>/$MY_TOKEN/g" fluent-bit-linux.conf
+sed -i "s/<logiq endpoint>/$LOGIQ/g" fluent-bit-linux.conf
 mv fluent-bit-linux.conf /etc/td-agent-bit/td-agent-bit.conf
 echo "*.* action(type=\"omfwd\"
            queue.type=\"LinkedList\"
