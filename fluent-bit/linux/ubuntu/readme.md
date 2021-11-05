@@ -7,13 +7,25 @@ In order to forward Linux logs to LOGIQ by leveraging Fluent Bit, do the followi
   ```
   chmod +x td-agent-bit.sh
   ```
-3. Execute the script by running the following command.
+3. Set the cluster details
   ```
-  sudo ./td-agent-bit.sh
+  export LOGIQ="example.logiq.ai"
+  export MY_TOKEN=<Your Token>
+  ```
+5. Execute the script by running the following command.
+  ```
+  HTTP endpoint:
+  sudo -E ./td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo -E ./td-agent-bit.sh "https"
   
   or
+  HTTP endpoint:
+  sudo bash td-agent-bit.sh "http"
   
-  sudo bash td-agent-bit.sh
+  HTTPS endpoint:
+  sudo bash td-agent-bit.sh "https"
   ```
 
 The script execution carries out the following:
@@ -30,7 +42,7 @@ The script execution carries out the following:
            )
   ```
   
-- The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit`. Configure the `[OUTPUT]` section of the `td-agent-bit.conf` file based on your LOGIQ cluster, as shown below. 
+- The script also places the `td-agent-bit.conf` file under the default Fluent Bit installation folder `/etc/td-agent-bit` as shown below for http and https endpoints.
 
        For HTTP endpoint
        
@@ -50,9 +62,6 @@ The script execution carries out the following:
 
        For HTTPS endpoint
        
-         export LOGIQ="example.logiq.ai"
-         export MY_TOKEN="Your Token"
-
          [OUTPUT]
           name     http
           match    *
@@ -66,11 +75,6 @@ The script execution carries out the following:
           compress      gzip
           Header Authorization Bearer <Token>  
        
-Now that the configuration is complete, run the following commands to start Fluent Bit and Rsyslog.
-```
-systemctl start td-agent-bit
-systemctl restart rsyslog
-```
 
 You should now see your Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
 
