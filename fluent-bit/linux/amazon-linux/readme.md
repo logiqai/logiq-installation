@@ -1,23 +1,38 @@
 # Forwarding Amazon-Linux logs to LOGIQ using Fluent Bit
 
-The script `install.sh` included in this folder carries out the following functions:
+The script `isntall.sh` included in this folder carries out the following functions:
 - Installs Node Exporter, which exposes various metrices from your Linux machine(CPU, RAM usage)
 - Installs Fluent Bit on your Amazon-linux systems which is used for forwarding logs to LOGIQ.
 
-In order to install Node Exporter and Fluent Bit to forward Linux logs, do the following. 
+The script `td-agent-bit.sh` included in this folder carries out the following functions:
+- Installs Fluent Bit on your Amazon-linux systems which is used for forwarding logs to LOGIQ.
 
-1. Download the `install.sh` script from this folder. 
+In order to install Fluent Bit to forward Linux logs, do the following (Follow the same instructions for installating Node-exporter and run install.sh). 
+
+1. Download the `td-agent-bit.sh` script from this folder. 
 2. Make the script executable by running the following command. 
   ```
-  chmod +x install.sh
+  chmod +x td-agent-bit.sh
   ```
-3. Execute the script by running either of the following commands.
+3. Set the cluster details
   ```
-  sudo ./install.sh
+  export LOGIQ="example.logiq.ai"
+  export MY_TOKEN=<Your Token>
   ```
-  Or,
+4. Execute the script by running either of the following commands.
   ```
-  sudo bash install.sh
+  HTTP endpoint:
+  sudo -E ./td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo -E ./td-agent-bit.sh "https"
+  
+  or
+  HTTP endpoint:
+  sudo bash td-agent-bit.sh "http"
+  
+  HTTPS endpoint:
+  sudo bash td-agent-bit.sh "https"
   ```
 
 The script executes and carries out the following:
@@ -52,11 +67,6 @@ The script also places the `td-agent-bit.conf` file under the default Fluent Bit
     Header Authorization Bearer ${LOGIQ_TOKEN}
 ```
 
-Now that the configuration is complete, run the following commands to start Fluent Bit and Rsyslog.
-```
-systemctl start td-agent-bit
-systemctl restart rsyslog
-```
 
 You should now see your Amazon-Linux logs being ingested into the `Linux:Linux1` namespace on your LOGIQ UI. 
 
