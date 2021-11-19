@@ -21,3 +21,10 @@ then
 else
    echo "Need a minimum of 250G disk space \n"
 fi
+
+wget https://github.com/logiqai/logiqctl/releases/download/logiqctl-2.1.5/logiqctl_linux_amd64 
+wget https://fluent-test-conf.s3.amazonaws.com/logiq-monitoring.json   
+wget https://fluent-test-conf.s3.amazonaws.com/logs-overview.json  
+wget https://fluent-test-conf.s3.amazonaws.com/logflow1.json 
+wget https://fluent-test-conf.s3.amazonaws.com/logflow2.json
+sudo chmod 777 logiqctl_linux_amd64
