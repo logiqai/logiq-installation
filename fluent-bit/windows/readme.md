@@ -20,7 +20,8 @@ Windows logs to Logiq.
 ```
 - Execute the below method to send the payload to your logiq endpoint.
 ```
-  Invoke-RestMethod -Uri " https://<logiq endpoint>/v1/json_batch" -Method 'Post' -Body $body -Headers $header | ConvertTo-HTML
+ [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+ Invoke-RestMethod -Uri " https://<logiq endpoint>/v1/json_batch" -Method 'Post' -Body $body -Headers $header | ConvertTo-HTML
 ```
 - If you are able to send the payload using the above steps, download this repository on your machine.
 - Create a temporary folder (D:/test)
