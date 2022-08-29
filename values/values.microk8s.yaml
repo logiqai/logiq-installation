@@ -5,7 +5,7 @@ logiq-flash:
   service:
     type: NodePort
   image:
-    tag: 2.1.24-rc41
+    tag: v3.4
     pullPolicy: IfNotPresent
   persistence:
     enabled: true
@@ -34,7 +34,7 @@ logiq-flash:
 flash-discovery:
   fullnameOverride: flash-discovery
   image:
-    tag: 2.0.1
+    tag: 2.0.3-rc7
     pullPolicy: IfNotPresent
   replicaCountDiscovery: 2
   persistence:
@@ -139,7 +139,7 @@ flash-coffee:
   coffee:
     replicaCount: 1
     image:
-      tag: brew.2.1.37-rc60
+      tag: brew.v3.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -150,7 +150,7 @@ flash-coffee:
   coffee_worker:
     replicaCount: 1
     image:
-      tag: brew.2.1.37-rc60
+      tag: brew.v3.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -198,6 +198,9 @@ ingress:
 
 kubernetes-ingress:
   controller:
+    image:
+      repository: k8s.gcr.io/ingress-nginx/controller
+      tag: "v1.2.0"
     replicaCount: 1
     ingressClass: logiq-ingress
     service:
@@ -213,21 +216,67 @@ kubernetes-ingress:
     create: true
     name: ingress-nginx
 
-prometheus-operator:
+prometheus:
   fullnameOverride: prometheus
   persistence:
     enabled: true
     size: 20Gi
   alertmanager:
     replicaCount: 1
+    persistence:
+      enabled: true
+      size: 20Gi
   prometheus:
     replicaCount: 1
+    persistence:
+      enabled: true
+      size: 20Gi
+    thanos:
+      create: true
+      objectStorageConfig:
+        secretName: thanos-objectstorage-config
+        secretKey: thanos.yaml
   operator:
     replicaCount: 1
   kube-state-metrics:
     replicaCount: 1
   node-exporter:
     replicaCount: 1
+
+thanos:
+  receive:
+    logLevel: debug 
+    service:
+    ## @param receive.service.type Kubernetes service type
+    ##
+       type: ClusterIP 
+    enabled: true
+  query:
+    enabled: true
+    dnsDiscovery:
+      enabled: true
+      sidecarsService: logiq-prometheus-prometheus-thanos
+      sidecarsNamespace: logiq
+  bucketweb:
+    enabled: true
+  compactor:
+    enabled: true
+  storegateway:
+    enabled: true
+  ruler:
+    enabled: true
+    alertmanagers:
+      - prometheus-alertmanager
+    config: |-
+      groups:
+        - name: "metamonitoring"
+          rules:
+            - alert: "PrometheusDown"
+              expr: absent(up{prometheus="logiq/logiq-prometheus-prometheus"})
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 
 logiqctl:
   image:
@@ -238,9 +287,13 @@ logiqctl:
 global:
   domain: null
   cloudProvider: aws
+  createStorageClass: false
   kubeDistributor:
          enabled: true 
          vendor: "microk8s"
+  enableAwsAlb:
+      enabled: false
+      albType: "internet-facing"
   enableMetricsServer: false
   sharedSecretName: logiq-shared-secret
   nodeSelectors:
