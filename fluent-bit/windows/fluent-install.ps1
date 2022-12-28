@@ -1,3 +1,4 @@
+Write-Host "Downloading Fluent Bit ..." -BackgroundColor Green -ForegroundColor White
 Invoke-WebRequest 'https://fluentbit.io/releases/1.8/td-agent-bit-1.8.6-win64.zip'  -OutFile td-agent-bit.zip
 Expand-Archive -Path td-agent-bit.zip -DestinationPath .
 $path=ls  *td* -Recurse  -Directory|Select-String td-agent
