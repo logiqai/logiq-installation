@@ -25,15 +25,15 @@ Please follow the below steps to install Prometheus on Windows:
 ```
 - Prometheus service should start running, run the below to check
 ```
-netstat|select-string 9090
+netstat | select-string 9090
 ```
-If you want to add/ modify to enable prometheus to scrape custom endpoint, make the changes on Prometheus.yml file in downloaded prometheus directory and restart the prometheus service
+If you want to add/ modify to enable prometheus to scrape custom endpoint, make the changes on Prometheus.yml file in downloaded prometheus directory and restart the prometheus service.
 
 > To enable remote-write on Prometheus, include the remote-write endpoint as shown below in the Prometheus.yml configuration and restart the Prometheus service.
 
 ```yaml
 remote_write:
-  - url: https://<Logiq-endpoint>/api/v1/receive
+  - url: https://<LOGIQ-endpoint>/api/v1/receive
     tls_config:
       ca_file: <CA-file>
       cert_file: <cert-file>
