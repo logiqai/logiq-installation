@@ -1,0 +1,816 @@
+#!/usr/bin/perl
+#
+#
+# Thu Dec 15 17:12:16 PST 2022
+# - Supports fluent-bit, prometheus, node-explore, wazuh-agent config/enable
+#
+# Tue Dec 17 10:23:09 PST 2022
+# - supports jammy/focal x86_64, bullseye arm7
+#
+# Tue Dec 20 11:11:09 PST 2022
+# - Supports wazuh-agent vulnerability scan installation
+#
+# Mon Dec 26 01:12:10 PST 2022
+# - fluent-bit package install not using tarball
+# - remove all td-agent-bit references
+
+use strict;
+use POSIX ":sys_wait_h";
+
+use constant NOTSET => "NOTSET";
+
+my $lhp_port = 443;  # 5002 for local
+my $agent_ns = "sysmanager";
+my $agent_app =  "logiqcoll";
+my $exec = NOTSET;
+
+my $verbose= 0;
+my $cmdinfo = "CMD_INFO>";
+my $dd = `date +"%Y%m%d%H%M%S"`; chomp $dd;
+my $logfname = "/tmp/logiqcoll_log_${dd}.log";
+
+open my $fd, ">", $logfname or die "cannot open $logfname, $!\n";
+
+my @instmap = (1,0,0,0, 0);
+my $instsize = scalar(@instmap);
+my $instauth=0;
+my $promavail=0;
+
+my $ver = `cat build_number`; chomp $ver; $ver="0.$ver";
+my $endpoint = NOTSET;
+my $wazuhmanagerip = NOTSET;
+my $wazuhpasswd = NOTSET;
+my $ingetoken = NOTSET;
+my $cluster_id = NOTSET;
+my $namespace = NOTSET;
+my $tenant_id = NOTSET;
+my $tenant = NOTSET;
+my $rasp=0;
+my $cfgonly=0;
+my $noendpoint=0;
+my $endpointdown=0;
+
+my $tarm = "";
+my $tarv = "2.41.0";
+my $tarf = "";
+
+
+my $osv = `grep VERSION_CODENAME /etc/os-release | cut -d "=" -f2`; chomp $osv;
+my $arch = `uname -m`; chomp $arch;
+
+my $hostname = `uname -n`; chomp $hostname;
+my $homedir= $ENV{HOME}; chomp $homedir; $homedir=~s/\//\\\//g;
+my $user= $ENV{USER}; chomp $user;
+my $uid = gen_mac_id();
+my $hostuid = "${hostname}_${uid}";
+
+my $ns = "logiq_monitor";
+my $app = "logiqcoll";
+
+my @sea = ('<host_name>', '<home_dir>', '<user>', '<end_point>', '<inge_token>', '<machine_id>', '<cluster_id>', '<namespace>', '<host_uid>', '<tenant_id>', '<tenant>');
+my @rep = ($hostname,     $homedir,     $user,    $endpoint, $ingetoken, $uid, $cluster_id, $namespace, $hostuid, $tenant_id, $tenant);
+
+##############################################################
+#  subs
+##############################################################
+
+sub single_agent_check {
+	if (`ps -ef | grep -P 'logiqcollinst.*--instauth'| wc -l` > 3) {
+	        print `ps -ef | grep -P \"logiqcollinst.*--instauth\"`;
+		print "ERR> Multiple logiqcollinst session is not allowed, exit\n";
+		send_to_endpoint ("ERR> Multiple logiqcollinst session is not allowed, exit\n");
+		exit(1);
+	}
+}
+
+
+sub gen_mac_id {
+        my @ethlist = `sudo ls /sys/class/net/`; chomp @ethlist;
+        my @etype = ("eth", "ens");
+        my @epre = ("e", "s");
+        
+        myprint(0, "ethlist=@ethlist\n");
+	myprint(0, "etype=@etype\n");
+
+        my $ee;
+        my $ss;
+        BREAK_HERE: for ($ee=0; $ee<@etype; $ee++) {
+                for ($ss=0; $ss<10; $ss++) {
+
+                        #print "$etype[$ee]${ss}\n";    
+                        if (grep (/^$etype[$ee]${ss}$/, @ethlist)) {
+				#print "ee=$ee, ss=$ss\n";
+				#print "grep=", grep(/$etype[$ee]${ss}/, @ethlist), "\n";
+                                last BREAK_HERE;
+                        }
+                }
+        }
+        if ($ee>=(scalar @etype) && $ss>=10) {
+                myprint (1, "ERR> eth port ee=$ee  and ss=$ss limit reached, reached\n");
+                myprint (1, "     ethlist = @ethlist\n");
+		send_to_endpoint ("ERR> eth port ee=$ee  and ss=$ss limit reached, reached\n");
+		send_to_endpoint ("     ethlist = @ethlist\n");
+                exit(1);
+        }
+
+        my $id = `cat /sys/class/net/$etype[$ee]$ss/address`; 
+	if ($?) {
+		print "no /sys/class/net/$etype[$ee][$ss]/address defined, can't generate host_uid, exit\n";
+		print "search for ethX and ensX\n";
+		exit(1);
+	}
+	chomp $id;
+        $id = "$epre[$ee]${ss}$id";
+        $id = join ("", split /:/, $id);
+}
+
+
+sub check_rasp {
+	`sudo ls /etc/apt/sources.list.d/raspi.list > /dev/null 2>&1`;
+	if (!$?) {
+		$rasp=1;
+	} 
+}
+
+sub myprint {
+	my $dd = `date +"%F %X"`; chomp $dd;
+	my $arg1 = shift;
+	my $mesg = shift;
+	if ($arg1==0) {
+		print $fd "$dd logiqcollinst> $mesg";
+	} elsif ($arg1==1) {
+		print $fd "$dd logiqcollinst> $mesg";
+		print "$dd> $mesg";
+	} elsif ($arg1==2) {
+		print "$dd> $mesg";
+	}
+}
+
+sub mycmd {
+
+	my $arg1 = shift;
+	my $arg2 = shift; # display 1-yes, 0-no
+	my $arg3 = shift; # exit upon error, 1-yes, 0-no
+	my $arg4 = shift;
+
+	if ($arg4 ne "") {
+        	myprint(1, "$cmdinfo $arg4");
+	}
+
+	if ($verbose) {
+        	print("<cmd=$arg1>\n");
+	}
+
+	my $oout = `$arg1 2>&1`;
+	my $err = $?;
+	chomp $oout;
+
+	if ($verbose) {
+        	print($err, "<oout=$oout>\n");
+	}
+
+	if ($arg2==1) {
+		myprint(1, "$err, cmd=<$arg1>, log=<$oout>\n");
+	
+	} 
+	if ($err) {
+		if ($arg3==1)  {
+			myprint(1, "$err, cmd=<$arg1>, log=<$oout>, exit\n\n");
+			send_to_endpoint("$err, cmd=<<$arg1>, log=<$oout>, exit\n");
+			exit(1);
+		} else {
+			myprint(0, "$err, cmd=<$arg1>, log=<$oout>error\n");
+		}
+
+	} else {
+		if ($arg2!=1) {
+			myprint(0, "$err, cmd=<$arg1>, log=<$oout>\n");
+		}
+
+	}
+
+	return $err;
+
+}
+
+
+sub df_check {
+	my $mesg = shift;
+	my $df = `df -l .`; 
+	myprint(0, "df_check $mesg\n");
+	myprint(0, $df);
+}
+
+
+sub my_cp_cmd {
+	my $ff = shift;
+	if (!mycmd("ls $ff", 0, 0, "")) {
+		myprint(1, "WARNING> $ff already exists, overwrites\n");
+	} 
+
+	my @fflist = split /\//, $ff;
+	my $nn1 = pop @fflist;
+	my $nn2 = join ("/", @fflist);
+
+	mycmd("sudo cp -r ./$nn1 $nn2/", 0, 1, "")
+}
+
+sub activate_service {
+	my $sname = shift;
+
+	mycmd ("sudo systemctl daemon-reload", 0, 0, "activate_service $sname ...\n");
+	mycmd ("sudo systemctl enable $sname", 0, 0, "");
+	mycmd ("sudo systemctl restart $sname", 0, 0, "");
+}
+
+sub deactivate_service {
+	my $sname = shift;
+
+	mycmd ("sudo systemctl stop $sname", 0, 0, "deactivate_service $sname ...\n");
+	mycmd ("sudo systemctl disable $sname", 0, 0, "");
+}
+
+sub replace_all {
+	my $fname = shift;
+
+	myprint(1, "replace fields in file: $fname ...\n");
+
+	for (my $i=0; $i<@sea; $i++) {
+		if ($rep[$i] eq NOTSET) {
+			myprint(1, "seach $sea[$i] replace $rep[$i] file $fname not set, exit\n");
+			send_to_endpoint("seach $sea[$i] replace $rep[$i] file $fname not set, exit\n");
+			exit(1);
+		}
+		mycmd ("sudo sed -i 's/$sea[$i]/$rep[$i]/g' $fname", 0, 1, "");
+	}
+}
+
+sub wait_timeout {
+	my $timeout = shift;
+	my $cmd = shift;
+	my $pid = fork();
+	if ($pid == 0) {
+		#exec ("ssh $remoteHost 1>/dev/null 2>/deve/null");
+		mycmd ($cmd, 0, 0, "");
+     		exit;
+	} elsif ($pid > 0) {
+     		sleep($timeout);
+		my $kid = waitpid($pid, WNOHANG);
+		#my $kid = waitpid($pid, 0);
+		if (!$kid) {
+     			kill 1, $pid;
+			myprint (1, "cmd <timeout=$timeout> <$cmd> NOT done execute, killed but no exit\n\n");
+			#exit(1);
+		} 
+	}
+}
+
+sub get_args {
+
+	while (@ARGV) {
+
+
+		my $arg = shift @ARGV;
+
+		if ($arg=~/--help/) {
+                	print "\n";
+                	print "command: logiqcollinst\n";
+                	print "  --help\n";
+                	print "  --cluster_id <cluster_id name>\n";
+			print "    Set to company name\n";
+			print "    use <hostname> to set to current device hostname\n";
+                	print "  --namespace  <namespace name>\n";
+			print "    Set department name (map to namespace)\n";
+			print "    use <machine_id> to set to current device unique machine id\n";
+			print "  --tenant_id <tenant_id>\n";
+			print "  --tenant <tenant>\n";
+                	print "  --instmap x,x,x,x,x>\n";
+                	print "    (fluent-bit, prometheus, prometheus-node-exporter, wazuh-agent, ossec-v-scan)\n";
+                	print "    default instamap=(", join(",", @instmap), ")\n";
+                	print "    1 - on, 0 - off\n";
+                	print "  --nowget\n";
+			print "    manually download the file and insert into logiqcoll/prometheus/instpkg\n";
+                        print "    'wget https://github.com/prometheus/prometheus/releases/download/v${tarv}/${tarf}.tar.gz'\n";
+                	print "  --instauth\n";
+			print "    to authorize agent installation\n";
+			print "  --endpoint <endpoint url>\n";
+			print "    Logiq endpoint name, e.g. lqxxxx.logiq.ai\n";
+			print "  --ingetoken <ingest token>\n";
+			print "    Logiq ingestion key obtained from Logiq web interface\n";
+			print "  --ossip <ip address>\n";
+			print "    ossec manager ip address\n";
+			print "  --osspasswd <32-dig hex value>\n";
+			print "    ossec manager password\n";
+                	print "  --verbose\n";
+                	print "  --cfgonly\n";
+			print "    not install the program drivers\n";
+			print "  --noendpoint\n";
+			print "    continue install with down endpoint \n";
+			print "  --version\n\n";
+
+			exit(0);
+
+        	} elsif ($arg=~/--cfgonly/) {
+			$cfgonly=1;
+        	} elsif ($arg=~/--noendpoint/) {
+			$noendpoint=1;
+        	} elsif ($arg=~/--tenant_id/) {
+			$tenant_id = shift @ARGV;
+        	} elsif ($arg=~/--tenant/) {
+			$tenant = shift @ARGV;
+        	} elsif ($arg=~/--cluster_id/) {
+			$cluster_id = shift @ARGV;
+			if ($cluster_id eq "<hostname>") {
+				$cluster_id = $hostname;
+			}
+        	} elsif ($arg=~/--namespace/) {
+			$namespace = shift @ARGV;
+			if ($namespace eq "<machine_id>") {
+				$namespace = $uid;
+			}
+
+        	} elsif ($arg=~/--version/) {
+			print "logiqcollinst version $ver\n\n";	
+			exit(0);
+        	} elsif ($arg=~/--instauth/) {
+			print "installation enabled, continue\n";
+			$instauth=1;
+        	} elsif ($arg=~/--nowget/) {
+			print "use manually download promethes tgz file\n";
+			$promavail=1;
+        	} elsif ($arg=~/--instmap/) {
+
+                	my $arg1 = shift @ARGV;
+                	@instmap = split /,/, $arg1;
+                	if (@instmap!=$instsize) {
+                        	print "not mactching size, exit\n\n";
+                        	exit(1);
+                	}
+		} elsif ($arg=~/--endpoint/) {
+                	$endpoint = shift @ARGV;
+
+		} elsif ($arg=~/--verbose/) {
+                	$verbose = 1;
+
+		} elsif ($arg=~/--ingetoken/) {
+                	$ingetoken = shift @ARGV;
+		} elsif ($arg=~/--ossip/) {
+                	$wazuhmanagerip = shift @ARGV;
+		} elsif ($arg=~/--osspasswd/) {
+                	$wazuhpasswd= shift @ARGV;
+        	} else {
+                	print "Unrecognized argument $arg\n";
+        	}
+
+	}
+
+	myprint(0, "logiqcoll args:\n");
+	myprint(0, "  ver=$ver\n");
+	myprint(0, "  instauth=$instauth\n");
+	myprint(0, "  hostname=$hostname\n");
+	myprint(0, "  instmap=@instmap\n");
+	myprint(0, "  endpoint=$endpoint\n");
+	myprint(0, "  ingetoken=$ingetoken\n");
+	myprint(0, "  ossip=$wazuhmanagerip\n");
+	myprint(0, "  osspasswd=$wazuhpasswd\n");
+	myprint(0, "  cluster_id=$cluster_id\n");
+	myprint(0, "  namespace=$namespace\n");
+	myprint(0, "  tenant_id=$tenant_id\n");
+	myprint(0, "  tenant=$tenant\n");
+	myprint(0, "  hostuid=$hostuid\n");
+	myprint(0, "  cfgonly=$cfgonly\n");
+	myprint(0, "  nowget=$promavail\n");
+	myprint 0, "  ${tarf}.tar.gz'\n";
+	myprint(0, `df -l .`);
+        @rep = ($hostname,     $homedir,     $user,    $endpoint, $ingetoken, $uid, $cluster_id, $namespace, $hostuid, $tenant_id, $tenant);
+
+}
+
+sub param_check {
+
+	my $pkg = shift;
+	my $aval = shift;
+	my $aname = shift;
+
+	if ($aval eq NOTSET) {
+		myprint(1, "aval=$aval\n");
+		myprint(1, "Not installed, package $pkg parameter $aname is not set, exit.\n");
+		exit(1);
+	}
+
+}
+
+
+sub check_setting {
+	param_check("In agent", $cluster_id, "cluster_id name needs to be set");
+	param_check("In agent", $namespace, "namespace name needs to be set");
+
+	param_check("In agent", $tenant_id, "tenant_id name needs to be set");
+	param_check("In agent", $tenant, "tenant name needs to be set");
+
+	if ($instmap[0]) {
+		param_check("Fluent-bit agent", $endpoint, "LOGIQ end point name");
+		param_check("Fluent-bit agent", $ingetoken, "LOGIQ ingest token");
+		
+	} elsif ($instmap[1]) {
+		param_check("Prometheus Server", $endpoint, "LOGIQ end point name");
+
+	} elsif ($instmap[3]) {
+		
+		param_check("OSSEC agent", $wazuhmanagerip, "OSSEC manager IP");
+		param_check("OSSEC agent", $wazuhpasswd, "OSSEC manager password");
+	}
+
+}
+
+
+sub put2tmp {
+	for my $ff (@_) {
+		my @fflist = split /\//, $ff;
+		mycmd ("sudo cp $ff /tmp/@fflist[-1].prev", 0, 0, "");
+	}
+}
+
+sub get4tmp {
+	for my $ff (@_) {
+		my @fflist = split /\//, $ff;
+		my $nn1 = pop @fflist;
+		my $nn2 = join ("/", @fflist);
+		mycmd ("sudo mv /tmp/$nn1.prev $nn2\n", 0, 0, "");
+	}
+}
+
+
+sub install_fluentbit {
+
+	df_check("fluent_bit beg");
+	deactivate_service ("td-agent-bit.service");
+	deactivate_service ("fluent-bit.service");
+	chmod ("sudo rm /etc/systemd/system/fluent-bit.service", 0, 1);
+	chdir ("fluent-bit");
+
+	put2tmp("/etc/fluent-bit/fluent-bit.conf", "/etc/fluent-bit/parsers.conf", "/etc/fluent-bit/fluent-bit.service");
+
+	if (!$cfgonly) {
+		if ($rasp) {
+			mycmd("curl https://packages.fluentbit.io/fluentbit.key | sudo apt-key add -", 1, 1, "");
+			if (`grep "packages.fluentbit.io" /etc/apt/sources.list`) {
+				myprint("flunebit package is already in /etc/apt/sources.list", 1);
+			} else {
+				mycmd("sudo echo \"deb https://packages.fluentbit.io/raspbian/$osv $osv main\" | sudo tee -a /etc/apt/sources.list > /dev/null", 0, 1, "");
+			}
+		} else {
+			mycmd("curl https://packages.fluentbit.io/fluentbit.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/fluentbit-keyring.gpg > /dev/null", 0, 1, "");
+			if (`grep "packages.fluentbit.io" /etc/apt/sources.list`) {
+				myprint("flunebit package is already in /etc/apt/sources.list", 1);
+			} else {
+				mycmd("sudo echo \"deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$osv $osv main\" | sudo tee -a /etc/apt/sources.list", 1, 1, "");
+			}
+		}
+
+		mycmd("sudo apt-get update", 0, 0, "running apt-get update ...\n");
+		mycmd("sudo apt-get install fluent-bit -y", 0, 1, "test and install fluent-bit ...\n");
+	}
+
+	mycmd("cp conf/* .", 0, 1, "");
+
+	get4tmp("/etc/fluent-bit/fluent-bit.conf", "/etc/fluent-bit/parsers.conf", "/etc/fluent-bit/fluent-bit.service");
+
+	replace_all("fluent-bit.service");
+	replace_all("fluent-bit.conf");
+
+	my $ff="/etc/fluent-bit/fluent-bit.service";
+	my_cp_cmd($ff);
+
+	my $ff="/lib/systemd/system/fluent-bit.service";
+	my_cp_cmd($ff);
+
+	my $ff="/etc/fluent-bit/fluent-bit.conf";
+	my_cp_cmd($ff);
+
+	my $ff="/etc/fluent-bit/parsers.conf";
+	my_cp_cmd($ff);
+
+	activate_service ("fluent-bit.service");
+
+	myprint(1, "fluent-bit.service installed and activated\n");
+	chdir ("..");
+	df_check("fluent_bit end");
+
+}
+
+sub mylogger {
+	my $kk=shift;
+	my $vv=shift;
+	mycmd ("logger '${kk}${vv}'", 0, 0, "");	
+}		
+
+sub test_endpoint {
+
+      #./flash-test-framework -lhp 5002 -host 127.0.0.1 -ingest -namespace jsonb_test5 -ApplicationName OneMsg -jsonb -it eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOltdLCJhdWQiOiJsb2dpcS1jbGllbnRzIiwianRpIjoiMGY4MTYyMWYtNWUxOS00MjFkLTkxNWYtNDRlOGI3YmU3Zjg2IiwiaWF0IjoxNjc5NjEzMjYxLCJpc3MiOiJsb2dpcS1jb2ZmZWUtc2VydmVyIiwibmJmIjoxNjc5NjEzMjYxLCJzdWIiOiJmbGFzaC1hZG1pbkBmb28uY29tIiwiVWlkIjoxLCJyb2xlIjoiYWRtaW4ifQ.KTkj4UIloMWAQeHLPG9qYxzXog8g7vh5q4VKqWU3udjNFOV22Q2pxkrHntnFR4GYMZgrPRVomE75B_hqTTMhd4yhSkc4Xuy74GFpP7Z2Dy5gBmumiCznw8rbPBFGX0ujy8bBa6eW2wwOsMgwTbVusoNETC2ow6ZIWHneP-w_Si_5V4Zyjih9GgtXxeJQHfdqO1yXkyoXRKI4OtsAqlS7ZgE7NgN_99fdI3cVPYidEbqO9u_x3LRVjd4tax114_ldxaEzoqqNd9GitIp9ang9GhTwQtlboa_9PzWTIZa14j6JT8mEpRxv5tWgkXFXxID2syW2bGWSEO4dvpgQd8Zc4w -onemsg "test here my logging"
+
+      my $mesg = qq/ver = $ver ,/.
+                qq/hostnmae = $hostname ,/.
+                qq/instmap = (/. join(" ", @instmap). "),".
+                qq/namespace = $namespace,/.
+                qq/cluster_id = $cluster_id ,/.
+                qq/hostuid = $hostuid ,/.
+                qq/prom = $tarf ,/.
+                qq/tenant_id = $tenant_id ,/.
+                qq/tenant = tenant/.
+                qq/cfgonly = $cfgonly ,/.
+                qq/endpoint = $endpoint/;
+
+		#print ("./bin/$exec -notlsv -https -lhp 5002 -host $endpoint -it $ingetoken -ingest -namespace $ns -ApplicationName $app -onemsg \"{$msg}\"\n");
+      $endpointdown = mycmd("./bin/$exec -lhp $lhp_port -notlsv -https -host $endpoint -it $ingetoken -ingest -namespace $agent_ns -ApplicationName $agent_app -ProcessId $$ -onemsg \"{$mesg}\"", 0, 1-$noendpoint, "Checking endpoint $endpoint ...\n");
+
+}
+
+sub send_to_endpoint {
+	my $mesg = shift;
+	my $mesg2 = qq/hostuid=$hostuid , message='$mesg'/;
+	if (!$endpointdown) {
+        	`./bin/$exec -lhp $lhp_port -notlsv -https -host $endpoint -it $ingetoken -ingest -namespace $agent_ns -ApplicationName $agent_app -ProcessId $$ -onemsg \"{$mesg2}\"`;
+	}
+
+} 
+
+##############################################################
+#  main
+##############################################################
+
+
+get_args();
+
+single_agent_check ();
+
+my $myexit=0;
+
+if ($osv=~/jammy/ && $arch=~/x86_64/) {
+	$tarm = "amd64";
+	myprint(1, "Supported $osv $arch, continue..\n");
+} elsif ($osv=~/focal/ && $arch=~/x86_64/) {
+	$tarm = "amd64";
+	myprint(1, "Supported $osv $arch, continue..\n");
+} elsif ($osv=~/bullseye/ && $arch=~/aarch64/) {
+	$tarm = "armv7";
+	myprint(1, "Supported $osv $arch, continue..\n");
+} elsif ($osv=~/buster/ && $arch=~/aarch64/) {
+	$tarm = "armv7";
+	myprint(1, "Supported $osv $arch, continue..\n");
+} else {
+	my $os = `grep -P '^NAME=' /etc/os-release | cut -d= -f2`; chomp $os;
+	myprint(1, "unsupport OS=<$os> Version=<$osv> Arch=<$arch>, exit\n");
+	exit(1);
+}
+
+
+$tarf = "prometheus-${tarv}.linux-${tarm}";
+$exec = "ftf_linux_amd64";
+
+if ($tarm eq "armv7") {
+	$exec = "ftf_linux_arm64";
+}
+
+
+send_to_endpoint("osv=<$osv>, arch=<$arch>");
+
+if ($myexit) {
+	myprint(1, "Not supported $osv $arch, Only X86_64 Ubuntu Jammy/Focal and Arm64 Bullseye/Buster are supported, exit\n\n");
+	send_to_endpoint("Not supported $osv $arch, Only X86_64 Ubuntu Jammy/Focal and Arm64 Bullseye/Buster are supported, exit\n\n");
+	exit(1);
+}
+
+
+check_rasp();
+
+if (!$instauth) {
+	myprint(1, "installation not authorized, exit\n\n");
+	send_to_endpoint("installation not authorized, exit\n\n");
+	exit(0);
+}
+
+check_setting();
+
+if (!$ENV{PWD}) {
+	myprint(1, "Don't run it under sudo, sudo is auto-elevated, exit\n\n");
+	send_to_endpoint("Don't run it under sudo, sudo is auto-elevated, exit\n\n");
+	exit(1);
+}
+
+test_endpoint ();
+
+mycmd ("sudo apt-get clean", 0, 1, "running apt-get clean ...\n");
+mycmd ("mkdir -p $homedir/logiqcoll", 0, 1, "");
+
+
+mylogger("Begin logiqcollinst", "");
+mylogger("version=", $ver);
+mylogger("hostname=", $hostname);
+mylogger("instmap=", join (" ", @instmap));
+mylogger("endpoint=", $endpoint);
+mylogger("ossip=", $wazuhmanagerip);
+mylogger("cluster_id=", $cluster_id);
+mylogger("namespace=", $namespace);
+mylogger("tenant_id", $tenant_id);
+mylogger("tenant=", $tenant);
+mylogger("hostuid=", $hostuid);
+mylogger("nowget=", $promavail);
+mylogger("cfgonly=", $cfgonly);
+mylogger("prom=", ${tarf});
+
+## install fluent-bit
+if ($instmap[0]) {
+
+	send_to_endpoint("begin fluent-bit install");
+	install_fluentbit();
+	send_to_endpoint("done fluent-bit install");
+
+} 
+
+
+## install prometheus
+
+if ($instmap[1]) {
+	send_to_endpoint("begin prometheus install");
+
+	df_check("prometheus beg");
+	deactivate_service ("prometheus.service");
+	chdir ("prometheus");
+
+	if (!$cfgonly) {
+		mycmd ("sudo apt install libpq-dev -y", 0, 0, "test and install libpq-dev ...\n");
+		mycmd ("mkdir -p /tmp/data-agent", 0, 1, "");
+
+	        mycmd("rm -fr consoles", 0, 0, "");
+       		mycmd("rm -fr console_libraries", 0, 0, "");
+
+		if ($promavail==0) {
+			chdir("instpkg");
+			# wget https://github.com/prometheus/prometheus/releases/download/v2.40.6/prometheus-2.40.6.linux-amd64.tar.gz
+			mycmd("wget https://github.com/prometheus/prometheus/releases/download/v${tarv}/${tarf}.tar.gz", 0, 0, "wget remote get prometheus v${tarv}/${tarf}.tar.gz ...\n");
+			chdir("..");
+		}
+
+		mycmd("sudo tar zxvf instpkg/${tarf}.tar.gz -C /opt", 0, 1, "");
+		mycmd("sudo rm instpkg/${tarf}.tar.gz", 0, 1, "");
+	}
+
+	put2tmp("/opt/prometheus/prometheus.yml", "/opt/prometheus/prometheus.service");
+
+	if (!$cfgonly) {
+		mycmd("sudo rm -fr /opt/prometheus", 0, 1, "");
+		mycmd("sudo mv /opt/${tarf} /opt/prometheus", 0, 1, "");
+		mycmd("sudo rm /opt/prometheus/promtool", 0, 1, "remove promtool to save installation space ...\n");
+	}
+
+	get4tmp("/opt/prometheus/prometheus.yml", "/opt/prometheus/prometheus.service");
+
+	mycmd("cp conf/* .", 0, 1, "");
+
+	replace_all("prometheus.yml");
+	replace_all("prometheus.service");
+
+	my $ff="/opt/prometheus/prometheus.service";
+	my_cp_cmd($ff);
+
+	my $ff="/lib/systemd/system/prometheus.service";
+	my_cp_cmd($ff);
+
+	mycmd("sudo cp *.* /opt/prometheus", 0, 1, "");
+
+	chdir("..");
+
+	activate_service ("prometheus.service");
+	myprint(1, "prometheus.service installed and activated\n");
+	df_check("prometheus end");
+	send_to_endpoint("done prometheus install");
+}
+
+# install node_exporter
+if ($instmap[2] && !$cfgonly) {
+	send_to_endpoint("begin node_exporter  install");
+	df_check("prometheus node_exporter beg");
+	deactivate_service ("prometheus-node-exporter");
+	deactivate_service ("nodeexporter");
+	chmod("sudo rm /etc/systemd/system/nodeexporter.service", 0, 1);
+	mycmd ("sudo apt-get install prometheus-node-exporter -y", 0, 1, "test and install prometheus-node-exporter ...\n");
+	myprint(1, "prometheus-node-exporter.service installed and activated\n");
+	activate_service ("prometheus-node-exporter");
+	df_check("prometheus node_exporter end");
+	send_to_endpoint("done node_exporter  install");
+}	
+
+
+## install wazuh-agent (ossec)
+
+if ($endpoint eq "lq2502.logiq.ai") {
+	send_to_endpoint("deactivate_service wazuh-agent");
+	deactivate_service("wazuh-agent.service");
+} else {
+
+if ($instmap[3]) {
+
+	send_to_endpoint("begin wazuh-agent install");
+	df_check("wazuh-agent beg");
+	deactivate_service("wazuh-agent.service");
+	mycmd ("sudo systemctl stop wqzuh-agent.service", 0, 0, "");
+
+	if (!$cfgonly) {
+		mycmd("curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg", 0, 1, "");
+		if (`grep "packages.wazuh.com" /etc/apt/sources.list.d/wazuh.list`) {
+			myprint("Wazuh package list already prepped into /etc/apt/sources.list.d/wazuh.list", 1);
+		} else {
+			mycmd("echo \"deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main\" | sudo tee -a /etc/apt/sources.list.d/wazuh.list", 0, 1, "");
+		}
+		mycmd("sudo apt-get update", 0, 0, "apt update ...\n");
+		mycmd("WAZUH_MANAGER=\"$wazuhmanagerip\"; sudo apt-get install wazuh-agent -y", 0, 1, "test and install wazuh-agent ...\n");
+		wait_timeout(10, "sudo /var/ossec/bin/agent-auth -m $wazuhmanagerip -p 1515 -P $wazuhpasswd -A $hostuid", 0, 1, "register wazuh-agent ...\n");
+	}
+
+	if (`sudo grep "<address>" /var/ossec/etc/ossec.conf | wc -l`==1) {
+		mycmd("sudo sed -i 's/<address>.*<\\\/address>/<address>$wazuhmanagerip<\\\/address>/g' /var/ossec/etc/ossec.conf", 0, 1, "");
+	} else {
+		myprint (1, "ERR> ossec.conf file confused, multiple <address> lines, exit\n\n");
+		send_to_endpoint( "ERR> ossec.conf file confused, multiple <address> lines, exit\n\n");
+		exit(1)
+	}
+
+	activate_service("wazuh-agent.service");
+	myprint(1, "ossec agent installed and activated\n");
+	df_check("wazuh-agent end");
+	send_to_endpoint("done wazuh-agent install");
+}
+
+
+if ($instmap[4]) {
+	## enable vulnerability scan feature
+	send_to_endpoint("Enable wazuh-agent VULN");
+
+	df_check("wazuh-agent VULN beg");
+	if (!`sudo ls /var/ossec/etc/ossec.conf`) {
+		myprint (1, "Vulnerability scan not enabled, osssec agent not installed, exit\n");
+		send_to_endpoint ("Vulnerability scan not enabled, osssec agent not installed, exit\n");
+		exit(1);
+	} else {
+
+		deactivate_service("wazuh-agent.service");
+		if (!$cfgonly) {
+			if ($osv=~/jammy/ || $osv=~/focal/) {
+				mycmd ("sudo apt-get update && sudo apt-get install openjdk-8-jre -y", 0, 0, "Update and install openjdk-8-jre ...\n");
+			} elsif ($osv=~/bullseye/ || $osv=~/buster/) {
+			mycmd ("sudo apt-get update && sudo apt-get install openjdk-11-jre -y", 0, 0, "Update and install openjdk-11-jre ...\n");
+			} else {
+				myprint (1, "Illegle osv=$osv arch=$arch support system, ossec vul scan exit\n");
+				send_to_endpoint("Illegle osv=$osv arch=$arch support system, ossec vul scan exit\n");
+				exit(1);
+			}	
+		}
+		if (!`ls -ls /usr/bin/java | grep "/etc/alternatives/java"`) {
+			myprint (1, "Illegle java path /usr/bin/java no alternatives found, exit\n");
+			send_to_endpoint ("Illegle java path /usr/bin/java no alternatives found, exit\n");
+			exit(1);
+		}
+
+		if (!`ls -ls /etc/alternatives/java | grep "/bin/java"`) {
+			myprint (1, "Illegle java path1 /etc/alternatives/java no /bin/java found, exit\n");
+			send_to_endpoint ("Illegle java path1 /etc/alternatives/java no /bin/java found, exit\n");
+			exit(1);
+		} 
+		my $tmpstr = `ls -ls /etc/alternatives/java`; chomp $tmpstr;
+		
+		my @tmpstrlist = split /\s+/, $tmpstr;
+		my @tmplist = split /\//, $tmpstrlist[-1];
+		pop @tmplist;
+		my $javapath = join ("\\\/", @tmplist);
+
+		mycmd ("sudo sed -i -z 's/  <wodle name=\"cis-cat\">\\n    <disabled>yes<\\/disabled>/  <wodle name=\"cis-cat\">\\n    <disabled>no<\\/disabled>/' /var/ossec/etc/ossec.conf", 0, 1, "");
+		mycmd ("sudo sed -i 's/<java_path>wodles\\/java<\\/java_path>/<java_path>$javapath<\\/java_path>/' /var/ossec/etc/ossec.conf", 0, 1, "");
+
+		activate_service("wazuh-agent.service");
+		myprint(1, "ossec vulnerability scan installed and activated\n");
+	}
+	df_check("wazuh-agent VULN end");
+	send_to_endpoint("Done wazuh-agent VULN");
+}
+}
+
+#mycmd ("sh ./status.sh | grep -A 1 'Loaded: loaded' | tee logger", 1, 0, "print service status status ...\n");
+foreach my $ss (("fluent-bit", "prometheus", "prometheus-node-exporter", "wazuh-agent")) {
+	my @sts = `sudo systemctl status ${ss}.service | grep -A 1 "Loaded: loaded"`;
+	my $stsstr = join (" ", @sts);
+	$stsstr =~ s/[\r\n]//g;
+	myprint (1, $stsstr);
+	send_to_endpoint($stsstr);
+}
+
+send_to_endpoint("Done logiqcoll installtion");
+
+#mycmd ("sudo systemctl status fluent-bit.service", 0, 0, "print fluent-bit service status ...\n");
+#mycmd ("sudo systemctl status prometheus.service", 0, 0, "print prometheus service status ...\n");
+#mycmd ("sudo systemctl status prometheus-node-exporter.service", 0, 0, "print prometheus-node-exporter service status ...\n");
+#mycmd ("sudo systemctl status wazuh-agent.service", 0, 0, "print wazuh-agent service status ...\n");
+# sudo systemctl status td-agent-bit.service
+
+
+
