@@ -1,4 +1,9 @@
-# logiqcoll.tgz is the installation tarball.  
+# logiqcoll - agent
+logiqcoll is logiq monitor data collector agent
+It install and automatically configures the subject machine with fluent-bit, prometheus remote write agent, and OSSEC wazuh agent.
+logiqcoll currently supports Ubuntu and Rasberry PI OS.
+
+# logiqcoll.tgz is the installation agent tarball.  
 ## Follow the readme.txt instruction inside.
 
 Mon Jan  2 23:26:02 PST 2023
