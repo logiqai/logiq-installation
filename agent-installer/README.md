@@ -1,3 +1,6 @@
+# logiqcoll.tgz is the installation tarball.  
+## Follow the readme.txt instruction inside.
+
 Mon Jan  2 23:26:02 PST 2023
 - change new log mapping 
   cluster_id -> company name (fixed)
