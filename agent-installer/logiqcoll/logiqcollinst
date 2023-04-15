@@ -83,45 +83,36 @@ sub single_agent_check {
 	}
 }
 
-
 sub gen_mac_id {
         my @ethlist = `sudo ls /sys/class/net/`; chomp @ethlist;
-        my @etype = ("eth", "ens");
-        my @epre = ("e", "s");
-        
-        myprint(0, "ethlist=@ethlist\n");
-	myprint(0, "etype=@etype\n");
+        my @etype = ("eth", "ens", "elp", "wlp");
+        my $id="bogus";
+        my $ididx=0;
 
-        my $ee;
-        my $ss;
-        BREAK_HERE: for ($ee=0; $ee<@etype; $ee++) {
-                for ($ss=0; $ss<10; $ss++) {
-
-                        #print "$etype[$ee]${ss}\n";    
-                        if (grep (/^$etype[$ee]${ss}$/, @ethlist)) {
-				#print "ee=$ee, ss=$ss\n";
-				#print "grep=", grep(/$etype[$ee]${ss}/, @ethlist), "\n";
+        BREAK_HERE: foreach my $nnet (@ethlist) {
+                for (my $ii=0; $ii<@etype; $ii++) {
+                        if ($nnet=~/^($etype[$ii].*$)/) {
+                                $id = $1;
+                                $ididx=$ii;
                                 last BREAK_HERE;
                         }
                 }
         }
-        if ($ee>=(scalar @etype) && $ss>=10) {
-                myprint (1, "ERR> eth port ee=$ee  and ss=$ss limit reached, reached\n");
-                myprint (1, "     ethlist = @ethlist\n");
-		send_to_endpoint ("ERR> eth port ee=$ee  and ss=$ss limit reached, reached\n");
-		send_to_endpoint ("     ethlist = @ethlist\n");
+
+        my $mac = `cat /sys/class/net/${id}/address`;
+
+        if ($?) {
+                print "no /sys/class/net/$id/address defined, can't generate host_uid, exit\n";
+                print "search for ethX, ensX, elpX, wlpX\n";
+                send_to_endpoint ("ERR> logiqcollinstall network port error, not ethX, ensX, elpX, wlpX,  id=$id\n");
                 exit(1);
         }
-
-        my $id = `cat /sys/class/net/$etype[$ee]$ss/address`; 
-	if ($?) {
-		print "no /sys/class/net/$etype[$ee][$ss]/address defined, can't generate host_uid, exit\n";
-		print "search for ethX and ensX\n";
-		exit(1);
-	}
-	chomp $id;
-        $id = "$epre[$ee]${ss}$id";
+        chomp $mac;
+        print "id=$id\n";
+        $id = substr($id, 0, 3);
+        $id = join("", chr(ord('a')+$ididx), $mac);
         $id = join ("", split /:/, $id);
+        return ($id);
 }
 
 
