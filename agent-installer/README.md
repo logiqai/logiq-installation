@@ -37,6 +37,9 @@ Tue Dec 13 23:47:27 PST 2022, pepe
   2) % cd <install-location>/logiqcoll
   3) % ./logiqcollinstall --instauth ....
 
+- One should manually run the command below prior to agent installation test sending json batch log record to the endpoint to make sure the ingestion end device is good to go.
+    % <logiqcoll_path>/bin/ftf_linux_amd64 -https -notlsv -lhp 443 -host <endpoint> -it <ingest_key> -ingest -namespace sysmanager -ApplicationName logiqcoll -ProcessId 12345 -onemsg "test message"
+
 - NOTE: 
   1) Note DO NOT run the installation under sudo.
 

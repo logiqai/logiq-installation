@@ -72,10 +72,17 @@ Tue Dec 13 23:47:27 PST 2022
       default instamap=1,1,1,0,0
       1 - on, 0 - off
 
-  4) --instauth is to confirm to install the agent 
-
+  6) --instauth is to confirm to install the agent 
 
 Thu Apr  6 18:09:30 PDT 2023
    * Sending installation log to endpoint
    * Adding tft utility binary for amd64 and arm64
+
+Wed Apr 19 22:13:42 PDT 2023
+
+  * One should manually run the command below prior to agent installtation to test sending json batch log record to the endpoint to make 
+    sure the ingestion end device is good to go.
+
+    % <logiqcoll_path>/bin/ftf_linux_amd64 -https -notlsv -lhp 443 -host <endpoint> -it <ingest_key> -ingest -namespace sysmanager -ApplicationName logiqcoll -ProcessId 12345 -onemsg "test message"
+
 
