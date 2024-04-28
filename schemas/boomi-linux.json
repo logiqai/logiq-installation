@@ -70,11 +70,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg by (hostname) (100 * system_cpu_load_average_15m{hostname=~'.*'})&duration=12h&step=15m",
+          "query": "avg by (hostname) (100 * jvm_uptime{hostname=~'.*'})&duration=12h&step=15m",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Load Average",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "jvm_uptime",
           "options": {
             "label": "",
             "selected_columns": [],
@@ -115,7 +115,7 @@
           "chart_type": "disk",
           "data_source_id": 2,
           "name": "Local Storage Space",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "system_filesystem_usage_bytes",
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
@@ -128,7 +128,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Local Storage iNodes",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "system_filesystem_inodes_usage",
           "options": {
             "label": "",
             "selected_columns": [],
@@ -138,10 +138,10 @@
         },
         {
           "query": "",
-          "chart_type": "disk/pie",
+          "chart_type": "disk",
           "data_source_id": 2,
           "name": "Shared Storage Space",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "",
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
@@ -151,10 +151,10 @@
         },
         {
           "query": "",
-          "chart_type": "disk/pie",
+          "chart_type": "disk",
           "data_source_id": 2,
           "name": "Shared Storage iNodes",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "",
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
@@ -188,7 +188,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU Utilization (Max)",
-          "schema": "system_cpu_time_seconds_total",
+          "schema": "",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -228,7 +228,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (avg)",
-          "schema": "system_cpu_time_seconds_total",
+          "schema": "system_cpu_load_average_15m",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -242,7 +242,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Machine Memory Utilization",
-          "schema": "system_network_io_bytes_total",
+          "schema": "",
           "options": {
             "label": "Actual vs Total",
             "selected_columns": [],
@@ -269,7 +269,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU I/O Wait",
-          "schema": "system_memory_usage_bytes",
+          "schema": "system_cpu_time_seconds_total",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -283,7 +283,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Network Bytes Sent",
-          "schema": "system_memory_usage_bytes",
+          "schema": "system_network_io_bytes_total",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -297,7 +297,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Network Bytes Received",
-          "schema": "system_memory_usage_bytes",
+          "schema": "system_network_io_bytes_total",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -311,7 +311,7 @@
           "chart_type": "table",
           "data_source_id": 2,
           "name": "List of PIDs",
-          "schema": "system_memory_usage_bytes",
+          "schema": "",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -342,10 +342,10 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "Local Storage Space",
+          "query": "",
           "chart_type": "line",
           "data_source_id": 2,
-          "name": "",
+          "name": "Local Storage Space",
           "schema": "",
           "options": {
             "label": "%",
@@ -373,7 +373,7 @@
           "query": "round(100* (sum by (hostname) (system_filesystem_inodes_usage{hostname=~'.*', job='prom-metrics-collector', state='used'}) /sum by (hostname) (system_filesystem_inodes_usage{hostname=~'.*', job='prom-metrics-collector', state=~'free|used'})))&duration=12h&step=5m",
           "chart_type": "line",
           "data_source_id": 2,
-          "name": " Local Storage Inodes",
+          "name": "Local Storage Inodes",
           "schema": "system_filesystem_inodes_usage",
           "options": {
             "label": "%",
@@ -535,7 +535,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Non-Heap Usage",
-          "schema": "gc_collection_count_g1_old_gen",
+          "schema": "",
           "options": {
             "label": "Used vs Max",
             "selected_columns": [],
@@ -548,7 +548,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Non-Heap Usage",
-          "schema": "gc_collection_count_g1_youngg_gen",
+          "schema": "process_runtime_jvm_memory_usage_bytes",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -562,7 +562,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Average GC Time",
-          "schema": "gc_collection_count_g1_youngg_gen",
+          "schema": "",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -576,7 +576,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Memory Pool",
-          "schema": "gc_collection_count_g1_youngg_gen",
+          "schema": "memory_pool_used_g1_old_gen_heap",
           "options": {
             "label": "Used vs Max",
             "selected_columns": [],
@@ -597,7 +597,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Thread Count",
-          "schema": "",
+          "schema": "process_runtime_jvm_threads_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -611,7 +611,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Daemon Thread Count",
-          "schema": "",
+          "schema": "process_runtime_jvm_threads_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -625,7 +625,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Loaded Classes Count",
-          "schema": "",
+          "schema": "process_runtime_jvm_classes_current_loaded",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -639,7 +639,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Open File Descriptor Count",
-          "schema": "",
+          "schema": "open_fd_count",
           "options": {
             "label": "Actual vs Max",
             "selected_columns": [],
@@ -681,7 +681,7 @@
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "JVM Uptime",
-          "schema": "",
+          "schema": "jvm_uptime",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -793,7 +793,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Average Execution Time",
-          "schema": "",
+          "schema": "average_execution_time",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -807,7 +807,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Average Execution Queue Time",
-          "schema": "",
+          "schema": "average_execution_queue_time",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -891,7 +891,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Pending Async Messages",
-          "schema": "",
+          "schema": "pending_async_message_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -905,7 +905,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Pending Sync Messages",
-          "schema": "",
+          "schema": "pending_sync_message_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -919,7 +919,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Platform Connection Failure",
-          "schema": "",
+          "schema": "connect_failure_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -933,7 +933,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Platform Message Count",
-          "schema": "",
+          "schema": "delivered_message_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -947,7 +947,7 @@
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Running Browser Count",
-          "schema": "",
+          "schema": "running_browsers_count",
           "options": {
             "label": "Actual",
             "selected_columns": [],
