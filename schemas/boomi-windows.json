@@ -6,11 +6,11 @@
             "order": "1",
             "queriesList": [
                 {
-                    "query": "",
+                    "query": "sum by (hostname) (target_info{ostype=~'windows'})",
                     "chart_type": "Table",
                     "data_source_id": 2,
                     "name": "Atom Status",
-                    "schema": "jvm_uptime",
+                    "schema": "target_info",
                     "options": {
                         "description": "Atom Status",
                         "groupBy": "",
@@ -24,7 +24,7 @@
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "Current Head Node",
-                    "schema": "jvm_uptime",
+                    "schema": "",
                     "options": {
                         "description": "Current Head Node",
                         "label": "% Avg",
@@ -34,11 +34,11 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "avg(round(100 - processor_idle_time{exported_instance='0,_Total'}, 0.01))",
                     "chart_type": "gauge",
                     "data_source_id": 2,
                     "name": "CPU Utilization",
-                    "schema": "system_cpu_time_seconds_total",
+                    "schema": "processor_idle_time",
                     "options": {
                         "description": "CPU Utilization",
                         "groupBy": "",
@@ -53,11 +53,11 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "round((memory_committed_bytes) / ((memory_committed_bytes)-(-memory_available_bytes))*100)",
                     "chart_type": "gauge",
                     "data_source_id": 2,
                     "name": "Machine Memory Utilization",
-                    "schema": "system_memory_usage_bytes",
+                    "schema": "memory_committed_bytes",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 4,
@@ -74,7 +74,7 @@
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "Load Average",
-                    "schema": "system_cpu_load_average_15m",
+                    "schema": "",
                     "options": {
                         "label": "",
                         "order": 5,
@@ -83,7 +83,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "avg(sum by (hostname) (sum(jvm_uptime{ostype=~'windows'})/2/3600000))",
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "JVM Uptime",
@@ -102,7 +102,7 @@
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "Container Exceptions",
-                    "schema": "jvm_uptime",
+                    "schema": "",
                     "options": {
                         "label": "Actual (Avg of Avg)",
                         "order": 7,
@@ -111,11 +111,11 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "avg by (hostname) (round(100 - logicaldisk_percent_free_space{hostname=~'.*'}, 0.01)))",
                     "chart_type": "disk",
                     "data_source_id": 2,
                     "name": "Local Storage Space",
-                    "schema": "system_cpu_load_average_15m",
+                    "schema": "logicaldisk_percent_free_space",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 8,
@@ -128,11 +128,12 @@
                     "chart_type": "line",
                     "data_source_id": 2,
                     "name": "Local Storage iNodes",
-                    "schema": "system_cpu_load_average_15m",
+                    "schema": "",
                     "options": {
                         "label": "",
                         "order": 9,
-                        "selected_columns": []
+                        "selected_columns": [],
+                        "description": "should we remove?"
                     },
                     "data_source_name": "Apica Monitoring"
                 },
@@ -158,12 +159,13 @@
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 11,
-                        "selected_columns": []
+                        "selected_columns": [],
+                        "description": "should we remove?"
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "avg(sum by (hostname) (handle_count_Count))",
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "Open File Descriptors",
@@ -184,11 +186,11 @@
             "order": "2",
             "queriesList": [
                 {
-                    "query": "",
+                    "query": "max(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
                     "data_source_id": 2,
                     "name": "CPU Utilization (Max)",
-                    "schema": "system_cpu_time_seconds_total",
+                    "schema": "processor_idle_time",
                     "options": {
                         "label": "%",
                         "order": 1,
@@ -197,11 +199,11 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "avg(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
                     "data_source_id": 2,
                     "name": "CPU Utilization (Avg)",
-                    "schema": "system_cpu_time_seconds_total",
+                    "schema": "processor_idle_time",
                     "options": {
                         "groupBy": "hostname",
                         "label": "%",
@@ -992,7 +994,7 @@
         "dropdowns": [
             {
                 "atom": {
-                    "query": "sum by (hostname) (jvm_uptime)",
+                    "query": "sum by (hostname) (target_info{ostype=~'windows'})",
                     "name": "Atom Selection",
                     "data_source_name": "Apica Monitoring"
                 }

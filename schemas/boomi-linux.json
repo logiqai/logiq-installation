@@ -6,11 +6,11 @@
       "order": "1",
       "queriesList": [
         {
-          "query": "",
+          "query": "sum by (hostname) (target_info{ostype=~'linux'})",
           "chart_type": "Table",
           "data_source_id": 2,
           "name": "Atom Status",
-          "schema": "jvm_uptime",
+          "schema": "target_info",
           "options": {
             "label": "Actual",
             "groupBy": "",
@@ -24,7 +24,7 @@
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Current Head Node",
-          "schema": "jvm_uptime",
+          "schema": "",
           "options": {
             "label": "% Avg",
             "selected_columns": [],
@@ -34,11 +34,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "100 - (100 * (sum by (instance) (rate(system_cpu_time_seconds_total{state=~'idle',hostname=~'.*'}[15m]))) / (sum by (instance) (rate(system_cpu_time_seconds_total{hostname=~'.*'}[15m]))))&duration=1h&step=5m",
+          "query": "round(avg(sum by (hostname) (round(100 - system_cpu_utilization_ratio{state=~'idle'}*100, 0.1))), 0.01)",
           "chart_type": "gauge",
           "data_source_id": 2,
           "name": "CPU Utilization",
-          "schema": "system_cpu_time_seconds_total",
+          "schema": "system_cpu_utilization_ratio",
           "options": {
             "label": "% (Avg of Avg)",
             "groupBy": "",
@@ -53,11 +53,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg by (instance) (100 - (100 * system_memory_usage_bytes{state='used',hostname=~'.*'} / ( 4 * 1024 * 1024 * 1024)))&duration=1h&step=5m",
+          "query": "round(avg(sum by (hostname) (round(system_memory_utilization_ratio{state=~'used'}*100, 0.1))), 0.01)",
           "chart_type": "gauge",
           "data_source_id": 2,
           "name": "Machine Memory Utilization",
-          "schema": "system_memory_usage_bytes",
+          "schema": "system_memory_utilization_ratio",
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
@@ -70,11 +70,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg by (hostname) (100 * jvm_uptime{hostname=~'.*'})&duration=12h&step=15m",
+          "query": "round(avg by (hostname) (system_cpu_load_average_1m), 0.01)",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Load Average",
-          "schema": "jvm_uptime",
+          "schema": "system_cpu_load_average_1m",
           "options": {
             "label": "",
             "selected_columns": [],
@@ -83,7 +83,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (round(jvm_uptime{hostname=~'.*'}/2/2/3600000))&duration=1h&step=5m",
+          "query": "avg(sum by (hostname) (round(jvm_uptime{hostname=~'.*', ostype='linux'}/2/2/3600000)))",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "JVM Uptime",
@@ -124,13 +124,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "system_filesystem_inodes_usage{hostname=~'.*', job='prom-metrics-collector', device='/dev/sda1'}&duration=12h&step=15m",
+          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{device=~'.*'}))",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Local Storage iNodes",
           "schema": "system_filesystem_inodes_usage",
           "options": {
-            "label": "",
+            "label": "% (Avg of Avg)",
             "selected_columns": [],
             "order": 9
           },
@@ -150,11 +150,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{mountpoint='/'}))",
           "chart_type": "disk",
           "data_source_id": 2,
           "name": "Shared Storage iNodes",
-          "schema": "",
+          "schema": "system_filesystem_inodes_usage",
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
@@ -163,7 +163,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum(open_fd_count{hostname=~'.*'})/2&duration=12h&step=15m",
+          "query": "avg(sum by (hostname) (open_fd_count))",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Open File Descriptors",
@@ -184,11 +184,11 @@
       "order": "2",
       "queriesList": [
         {
-          "query": "",
+          "query": "max(round(sum by (hostname) (100 - system_cpu_utilization_ratio{state=~'idle'}*100), 0.01))&duration=6h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU Utilization (Max)",
-          "schema": "",
+          "schema": "system_cpu_utilization_ratio",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -197,11 +197,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "100 - (100 * (sum by (hostname) (rate(system_cpu_time_seconds_total{state=~'idle',hostname=~'.*'}[5m]))) / (sum by (hostname) (rate(system_cpu_time_seconds_total{hostname=~'.*'}[5m]))))&duration=12h&step=15m",
+          "query": "avg(round(sum by (hostname) (100 - system_cpu_utilization_ratio{state=~'idle'}*100), 0.01))&duration=6h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU Utilization (Avg)",
-          "schema": "system_cpu_time_seconds_total",
+          "schema": "system_cpu_utilization_ratio",
           "options": {
             "groupBy": "hostname",
             "label": "%",
@@ -224,7 +224,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg_over_time(system_cpu_load_average_15m{hostname=~'.*'}[12h])*100",
+          "query": "avg_over_time(system_cpu_load_average_15m{hostname=~'.*'}[12h])*100&duration=12h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (avg)",
@@ -992,7 +992,7 @@
     "dropdowns": [
       {
         "atom": {
-          "query": "sum by (hostname) (jvm_uptime)",
+          "query": "sum by (hostname) (target_info{ostype=~'linux'})",
           "name": "Atom Selection",
           "data_source_name": "Apica Monitoring"
         }
