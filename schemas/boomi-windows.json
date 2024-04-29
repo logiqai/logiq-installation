@@ -6,7 +6,7 @@
             "order": "1",
             "queriesList": [
                 {
-                    "query": "sum by (hostname) (target_info{ostype=~'windows'})",
+                    "query": "sum by (hostname) (target_info{ostype=~'windows',hostname=~'.*'})",
                     "chart_type": "Table",
                     "data_source_id": 2,
                     "name": "Atom Status",
@@ -34,7 +34,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "avg(round(100 - processor_idle_time{exported_instance='0,_Total'}, 0.01))",
+                    "query": "avg(round(100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}, 0.01))",
                     "chart_type": "gauge",
                     "data_source_id": 2,
                     "name": "CPU Utilization",
@@ -53,7 +53,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "round((memory_committed_bytes) / ((memory_committed_bytes)-(-memory_available_bytes))*100)",
+                    "query": "round((memory_committed_bytes{hostname=~'.*'}) / ((memory_committed_bytes{hostname=~'.*'})-(-memory_available_bytes{hostname=~'.*'}))*100)",
                     "chart_type": "gauge",
                     "data_source_id": 2,
                     "name": "Machine Memory Utilization",
@@ -83,7 +83,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "avg(sum by (hostname) (sum(jvm_uptime{ostype=~'windows'})/2/3600000))",
+                    "query": "avg(sum by (hostname) (sum(jvm_uptime{ostype=~'windows',hostname=~'.*'})/2/3600000))",
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "JVM Uptime",
@@ -165,7 +165,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "avg(sum by (hostname) (handle_count_Count))",
+                    "query": "avg(sum by (hostname) (handle_count_Count{hostname=~'.*'}))",
                     "chart_type": "counter",
                     "data_source_id": 2,
                     "name": "Open File Descriptors",
@@ -186,7 +186,7 @@
             "order": "2",
             "queriesList": [
                 {
-                    "query": "max(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total'}), 0.01))&duration=6h&step=15m",
+                    "query": "max(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
                     "data_source_id": 2,
                     "name": "CPU Utilization (Max)",
@@ -199,7 +199,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "avg(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total'}), 0.01))&duration=6h&step=15m",
+                    "query": "avg(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
                     "data_source_id": 2,
                     "name": "CPU Utilization (Avg)",
