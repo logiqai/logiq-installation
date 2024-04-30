@@ -212,7 +212,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "max_over_time(system_cpu_load_average_5m{hostname=~'.*'}[12h])*100&duration=12h&step=15m",
+          "query": "max_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[12h])*100&duration=12h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (max)",
@@ -226,7 +226,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg_over_time(system_cpu_load_average_5m{hostname=~'.*'}[12h])*100&duration=12h&step=15m",
+          "query": "avg_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[12h])*100&duration=12h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (avg)",
