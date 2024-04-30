@@ -169,7 +169,7 @@
           "name": "Open File Descriptors",
           "schema": "open_fd_count",
           "options": {
-            "label": "Open FD's"
+            "label": "Open FD's",
             "selected_columns": [],
             "order": 12,
             "descriptions": "Open FDs"
