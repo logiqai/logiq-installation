@@ -12,7 +12,6 @@
           "schema": "target_info",
           "options": {
             "label": "Actual",
-            "groupBy": "",
             "order": 1,
             "description": "Atom Status",
             "plot" : {
@@ -53,7 +52,6 @@
           "schema": "system_cpu_utilization_ratio",
           "options": {
             "label": "% (Avg of Avg)",
-            "groupBy": "",
             "upperLimit": "",
             "order": 3,
             "zone": {
@@ -282,7 +280,6 @@
           "name": "CPU Utilization (Avg)",
           "schema": "system_cpu_utilization_ratio",
           "options": {
-            "groupBy": "hostname",
             "label": "%",
             "order": 2,
             "plot" : {
@@ -596,7 +593,6 @@
           "options": {
             "label": "%",
             "order": 8,
-            "groupBy": "hostname",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -756,7 +752,6 @@
           "options": {
             "label": "%",
             "order": 4,
-            "groupBy": "hostname",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",

@@ -19,7 +19,7 @@
                             "yLabel": "value",
                             "x" : "Timestamp",
                             "y": ["value"],
-                            "groupBy": "hostname",
+                            "groupBy": "",
                             "errorColumn": ""
                         }
                     },
@@ -71,7 +71,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "round((memory_committed_bytes{hostname=~'.*'}) / ((memory_committed_bytes{hostname=~'.*'})-(-memory_available_bytes{hostname=~'.*'}))*100)",
+                    "query": "round((memory_committed_bytes{hostname=~'.*',ostype='windows'}) / ((memory_committed_bytes{hostname=~'.*',ostype='windows'})-(-memory_available_bytes{hostname=~'.*',ostype='windows'}))*100)",
                     "chart_type": "gauge",
                     "name": "Machine Memory Utilization",
                     "schema": "memory_committed_bytes",
@@ -353,7 +353,7 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "",
+                    "query": "round((memory_committed_bytes{hostname=~'.*',ostype='windows'}) / ((memory_committed_bytes{hostname=~'.*',ostype='windows'})-(-memory_available_bytes{hostname=~'.*',ostype='windows'}))*100)&duration=1h&step=5m",
                     "chart_type": "line",
                     "name": "Machine Memory Utilization",
                     "schema": "system_memory_usage_bytes",
@@ -377,7 +377,6 @@
                     "name": "CPU I/O Wait",
                     "schema": "system_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 7,
                         "plot" : {

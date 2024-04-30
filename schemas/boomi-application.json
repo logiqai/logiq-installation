@@ -6,16 +6,17 @@
       "order": "5",
       "queriesList": [
         {
-          "query": "process_runtime_jvm_threads_count{hostname=~'.*'}&duration=12h&step=15m",
+          "query": "sum by (hostname) (thread_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Thread Count",
-          "schema": "process_runtime_jvm_threads_count",
+          "schema": "thread_count",
           "options": {
-            "label": "Actual",
             "order": 1,
+            "label": "Actual",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "Actual",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -25,17 +26,17 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "process_runtime_jvm_threads_count{hostname=~'.*',daemon='true'}&duration=12h&step=15m",
+          "query": "",
           "chart_type": "line",
           "name": "Daemon Thread Count",
-          "schema": "process_runtime_jvm_threads_count",
+          "schema": "",
           "options": {
-            "label": "Actual",
             "order": 2,
-            "groupBy": "",
+            "label": "",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -45,17 +46,18 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "process_runtime_jvm_classes_current_loaded{hostname=~'.*'}&duration=12h&step=15m",
+          "query": "",
           "chart_type": "line",
           "name": "Loaded Classes Count",
-          "schema": "process_runtime_jvm_classes_current_loaded",
+          "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "",
             "order": 3,
             "groupBy": "",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -65,7 +67,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "open_fd_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (open_fd_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Open File Descriptor Count",
           "schema": "open_fd_count",
@@ -75,6 +77,7 @@
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "Actual vs Max",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -94,6 +97,7 @@
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -103,16 +107,17 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (jvm_start_time{hostname=~'.*'})",
           "chart_type": "counter",
           "name": "JVM Start Time",
-          "schema": "",
+          "schema": "jvm_start_time",
           "options": {
             "label": "Actual",
             "order": 6,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "Actual",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -122,7 +127,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round(sum(jvm_uptime{hostname=~'.*'})/2/3600000)",
+          "query": "sum by (hostname) (jvm_uptime{hostname=~'.*'})/3600000",
           "chart_type": "counter",
           "name": "JVM Uptime",
           "schema": "jvm_uptime",
@@ -132,6 +137,7 @@
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "Actual",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -151,6 +157,7 @@
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "label": "Actual",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -160,16 +167,16 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (job_scheduler_store_percent_usage{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Job Scheduler Store",
-          "schema": "",
+          "schema": "job_scheduler_store_percent_usage",
           "options": {
             "label": "%",
             "order": 9,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -179,10 +186,10 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (memory_percent_usage{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Memory Usage",
-          "schema": "",
+          "schema": "memory_percent_usage",
           "options": {
             "label": "%",
             "order": 10,
@@ -198,16 +205,16 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (store_percent_usage{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Data Store Usage",
-          "schema": "",
+          "schema": "store_percent_usage",
           "options": {
             "label": "%",
             "order": 11,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -217,16 +224,16 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (temp_percent_usage{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Tmp Data Store Usage",
-          "schema": "",
+          "schema": "temp_percent_usage",
           "options": {
             "label": "%",
             "order": 12,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -241,7 +248,7 @@
           "name": "Container Status",
           "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "",
             "order": 13,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -274,7 +281,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "average_execution_time{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (average_execution_time{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Average Execution Time",
           "schema": "average_execution_time",
@@ -293,7 +300,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "average_execution_queue_time{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (average_execution_queue_time{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Average Execution Queue Time",
           "schema": "average_execution_queue_time",
@@ -312,10 +319,10 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "(queued_execution_count{hostname=~'.*'} OR max_queued_executions{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Queued Executions",
-          "schema": "",
+          "schema": "queued_execution_count",
           "options": {
             "label": "Actual vs Max",
             "order": 17,
@@ -324,17 +331,17 @@
               "yLabel": "value",
               "x" : "Timestamp",
               "y": ["value"],
-              "groupBy": "hostname",
+              "groupBy": "__name__",
               "errorColumn": ""
             }
           },
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "(running_execution_Count{hostname=~'.*'} OR max_running_executions{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Running Executions",
-          "schema": "",
+          "schema": "running_execution_Count",
           "options": {
             "label": "Actual vs Max",
             "order": 18,
@@ -343,7 +350,7 @@
               "yLabel": "value",
               "x" : "Timestamp",
               "y": ["value"],
-              "groupBy": "hostname",
+              "groupBy": "__name__",
               "errorColumn": ""
             }
           },
@@ -355,7 +362,7 @@
           "name": "Discarded Executions",
           "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "",
             "order": 19,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -374,7 +381,7 @@
           "name": "Low Memory",
           "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "",
             "order": 20,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -407,7 +414,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "pending_async_message_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (pending_async_message_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Pending Async Messages",
           "schema": "pending_async_message_count",
@@ -426,7 +433,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "pending_sync_message_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (pending_sync_message_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Pending Sync Messages",
           "schema": "pending_sync_message_count",
@@ -445,7 +452,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "connect_failure_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (connect_failure_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Platform Connection Failure",
           "schema": "connect_failure_count",
@@ -464,7 +471,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "delivered_message_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (delivered_message_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Platform Message Count",
           "schema": "delivered_message_count",
@@ -483,7 +490,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "running_browsers_count{hostname=~'.*'}&duration=12h&step=5m",
+          "query": "sum by (hostname) (running_browsers_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Running Browser Count",
           "schema": "running_browsers_count",
