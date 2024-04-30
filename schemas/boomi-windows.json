@@ -8,46 +8,64 @@
                 {
                     "query": "sum by (hostname) (target_info{ostype=~'windows',hostname=~'.*'})",
                     "chart_type": "Table",
-                    "data_source_id": 2,
                     "name": "Atom Status",
                     "schema": "target_info",
                     "options": {
                         "description": "Atom Status",
-                        "groupBy": "",
                         "label": "Actual",
-                        "order": 1
+                        "order": 1,
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "counter",
-                    "data_source_id": 2,
                     "name": "Current Head Node",
                     "schema": "",
                     "options": {
                         "description": "Current Head Node",
                         "label": "% Avg",
                         "order": 2,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "avg(round(100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}, 0.01))",
                     "chart_type": "gauge",
-                    "data_source_id": 2,
                     "name": "CPU Utilization",
                     "schema": "processor_idle_time",
                     "options": {
                         "description": "CPU Utilization",
-                        "groupBy": "",
                         "label": "% (Avg of Avg)",
                         "order": 3,
                         "upperLimit": "",
                         "zone": {
                             "alert": 60,
                             "danger": 80
+                        },
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
                         }
                     },
                     "data_source_name": "Apica Monitoring"
@@ -55,16 +73,62 @@
                 {
                     "query": "round((memory_committed_bytes{hostname=~'.*'}) / ((memory_committed_bytes{hostname=~'.*'})-(-memory_available_bytes{hostname=~'.*'}))*100)",
                     "chart_type": "gauge",
-                    "data_source_id": 2,
                     "name": "Machine Memory Utilization",
                     "schema": "memory_committed_bytes",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 4,
-                        "selected_columns": [],
                         "zone": {
                             "alert": 60,
                             "danger": 80
+                        },
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
+                    },
+                    "data_source_name": "Apica Monitoring"
+                },
+                {
+                    "query": "round(avg by (hostname) (system_cpu_load_average_5m{ostype=~'windows',hostname=~'.*'}), 0.01)*100",
+                    "chart_type": "counter",
+                    "name": "Load Average",
+                    "schema": "",
+                    "options": {
+                        "label": "",
+                        "order": 5,
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
+                    },
+                    "data_source_name": "Apica Monitoring"
+                },
+                {
+                    "query": "avg(sum by (hostname) (sum(jvm_uptime{ostype=~'windows',hostname=~'.*'})/2/3600000))",
+                    "chart_type": "counter",
+                    "name": "JVM Uptime",
+                    "schema": "jvm_uptime",
+                    "options": {
+                        "description": "Average uptime across all nodes",
+                        "label": "Hours (Avg of Avg)",
+                        "order": 6,
+                        "upperLimit": "",
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
                         }
                     },
                     "data_source_name": "Apica Monitoring"
@@ -72,109 +136,117 @@
                 {
                     "query": "",
                     "chart_type": "counter",
-                    "data_source_id": 2,
-                    "name": "Load Average",
-                    "schema": "",
-                    "options": {
-                        "label": "",
-                        "order": 5,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "avg(sum by (hostname) (sum(jvm_uptime{ostype=~'windows',hostname=~'.*'})/2/3600000))",
-                    "chart_type": "counter",
-                    "data_source_id": 2,
-                    "name": "JVM Uptime",
-                    "schema": "jvm_uptime",
-                    "options": {
-                        "description": "Average uptime across all nodes",
-                        "groupBy": "",
-                        "label": "Hours (Avg of Avg)",
-                        "order": 6,
-                        "upperLimit": ""
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "counter",
-                    "data_source_id": 2,
                     "name": "Container Exceptions",
                     "schema": "",
                     "options": {
                         "label": "Actual (Avg of Avg)",
                         "order": 7,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "avg by (hostname) (round(100 - logicaldisk_percent_free_space{hostname=~'.*'}, 0.01)))",
                     "chart_type": "disk",
-                    "data_source_id": 2,
                     "name": "Local Storage Space",
                     "schema": "logicaldisk_percent_free_space",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 8,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Local Storage iNodes",
                     "schema": "",
                     "options": {
                         "label": "",
                         "order": 9,
-                        "selected_columns": [],
-                        "description": "should we remove?"
+                        "description": "should we remove?",
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "disk",
-                    "data_source_id": 2,
                     "name": "Shared Storage Space",
                     "schema": "system_cpu_load_average_15m",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 10,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "disk",
-                    "data_source_id": 2,
                     "name": "Shared Storage iNodes",
                     "schema": "system_cpu_load_average_15m",
                     "options": {
                         "label": "% (Avg of Avg)",
                         "order": 11,
-                        "selected_columns": [],
-                        "description": "should we remove?"
+                        "description": "should we remove?",
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "avg(sum by (hostname) (handle_count_Count{hostname=~'.*'}))",
                     "chart_type": "counter",
-                    "data_source_id": 2,
                     "name": "Open File Descriptors",
                     "schema": "open_fd_count",
                     "options": {
                         "descriptions": "Open FDs",
                         "label": "Actual (Avg of Avg)",
                         "order": 12,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 }
@@ -188,137 +260,191 @@
                 {
                     "query": "max(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "CPU Utilization (Max)",
                     "schema": "processor_idle_time",
                     "options": {
                         "label": "%",
                         "order": 1,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "avg(round(sum by (hostname) (100 - processor_idle_time{exported_instance='0,_Total',hostname=~'.*'}), 0.01))&duration=6h&step=15m",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "CPU Utilization (Avg)",
                     "schema": "processor_idle_time",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 2,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Load Average (max)",
                     "schema": "",
                     "options": {
                         "label": "Actual",
                         "order": 3,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Load Average (avg)",
                     "schema": "system_cpu_time_seconds_total",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 4,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Machine Memory Utilization",
                     "schema": "system_network_io_bytes_total",
                     "options": {
                         "label": "Actual vs Total",
                         "order": 5,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Machine Memory Utilization",
                     "schema": "system_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 6,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "CPU I/O Wait",
                     "schema": "system_memory_usage_bytes",
                     "options": {
                         "groupBy": "hostname",
                         "label": "%",
                         "order": 7,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Network Bytes Sent",
                     "schema": "system_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 8,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Network Bytes Received",
                     "schema": "system_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 9,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "table",
-                    "data_source_id": 2,
                     "name": "List of PIDs",
                     "schema": "system_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 10,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 }
@@ -332,168 +458,228 @@
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Local Storage Space",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual vs Total",
                         "order": 1,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 2,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Local Storage iNodes",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual vs Total",
                         "order": 3,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": " Local Storage Inodes",
                     "schema": "system_filesystem_inodes_usage",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 4,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Local Storage Write I/O",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 5,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Local Storage Read I/O",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 6,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage Space",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual vs Total",
                         "order": 7,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage Space",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 8,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage iNodes",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual vs Total",
                         "order": 9,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage iNodes",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 10,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage Write I/O",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 11,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Shared Storage Write I/O",
                     "schema": "",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 12,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 }
@@ -507,482 +693,114 @@
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Heap Usage",
                     "schema": "process_runtime_jvm_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Used vs Max",
                         "order": 1,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Heap Usage",
                     "schema": "process_runtime_jvm_memory_usage_bytes",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 2,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Non-Heap Usage",
                     "schema": "gc_collection_count_g1_old_gen",
                     "options": {
                         "label": "Used vs Max",
                         "order": 3,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Non-Heap Usage",
                     "schema": "gc_collection_count_g1_youngg_gen",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "%",
                         "order": 4,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Average GC Time",
                     "schema": "gc_collection_count_g1_youngg_gen",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Actual",
                         "order": 5,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 },
                 {
                     "query": "",
                     "chart_type": "line",
-                    "data_source_id": 2,
                     "name": "Memory Pool",
                     "schema": "gc_collection_count_g1_youngg_gen",
                     "options": {
-                        "groupBy": "hostname",
                         "label": "Used vs Max",
                         "order": 6,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                }
-            ]
-        },
-        {
-            "key": "application",
-            "title": "Application",
-            "order": "5",
-            "queriesList": [
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Thread Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "hostname",
-                        "label": "Actual",
-                        "order": 1,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Daemon Thread Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 2,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Loaded Classes Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 3,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Open File Descriptor Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual vs Max",
-                        "order": 4,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "bar",
-                    "data_source_id": 2,
-                    "name": "Head Node over Time",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "",
-                        "order": 5,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "counter",
-                    "data_source_id": 2,
-                    "name": "JVM Start Time",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 6,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "counter",
-                    "data_source_id": 2,
-                    "name": "JVM Uptime",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 7,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "counter",
-                    "data_source_id": 2,
-                    "name": "Input Args",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 8,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Job Scheduler Store",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "%",
-                        "order": 9,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Memory Usage",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "%",
-                        "order": 10,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Data Store Usage",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "%",
-                        "order": 11,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Tmp Data Store Usage",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "%",
-                        "order": 12,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "bar",
-                    "data_source_id": 2,
-                    "name": "Container Status",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 13,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "bar",
-                    "data_source_id": 2,
-                    "name": "Restarting",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 14,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Average Execution Time",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 15,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Average Execution Queue Time",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 16,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Queued Executions",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual vs Max",
-                        "order": 17,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Running Executions",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual vs Max",
-                        "order": 18,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Discarded Executions",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 19,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "bar",
-                    "data_source_id": 2,
-                    "name": "Low Memory",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 20,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "bar",
-                    "data_source_id": 2,
-                    "name": "Out of Memory",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 21,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Pending Async Messages",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 22,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Pending Sync Messages",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 23,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Platform Connection Failure",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 24,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Platform Message Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 25,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Running Browser Count",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 26,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Jetty Threads",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual vs Max",
-                        "order": 27,
-                        "selected_columns": []
-                    },
-                    "data_source_name": "Apica Monitoring"
-                },
-                {
-                    "query": "",
-                    "chart_type": "line",
-                    "data_source_id": 2,
-                    "name": "Jetty Queue size",
-                    "schema": "",
-                    "options": {
-                        "groupBy": "",
-                        "label": "Actual",
-                        "order": 28,
-                        "selected_columns": []
+                        "plot" : {
+                            "xLabel" : "Timestamp",
+                            "yLabel": "value",
+                            "x" : "Timestamp",
+                            "y": ["value"],
+                            "groupBy": "hostname",
+                            "errorColumn": ""
+                        }
                     },
                     "data_source_name": "Apica Monitoring"
                 }
