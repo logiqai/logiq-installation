@@ -132,8 +132,7 @@
           "options": {
             "label": "% (Avg of Avg)",
             "selected_columns": [],
-            "order": 9,
-            "groupBy": "hostname"
+            "order": 9
           },
           "data_source_name": "Apica Monitoring"
         },
