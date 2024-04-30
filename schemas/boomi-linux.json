@@ -184,7 +184,7 @@
       "order": "2",
       "queriesList": [
         {
-          "query": "max_over_time(round(sum by (hostname) (100 - system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}*100), 0.01))&duration=6h&step=15m",
+          "query": "round((1-(max_over_time(system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}[5m])))*100,0.01)&duration=6h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU Utilization (Max)",
@@ -198,7 +198,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg_over_time(round(sum by (hostname) (100 - system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}*100), 0.01))&duration=6h&step=15m",
+          "query": "round((1-(max_over_time(system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}[5m])))*100,0.01)&duration=6h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "CPU Utilization (Avg)",
@@ -212,11 +212,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "max_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[12h])*100&duration=12h&step=15m",
+          "query": "round(max_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[5m])*100,0.01)&duration=12h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (max)",
-          "schema": "",
+          "schema": "system_cpu_load_average_5m",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -226,11 +226,11 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[12h])*100&duration=12h&step=15m",
+          "query": "round(avg_over_time(system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}[5m])*100,0.01)&duration=12h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Load Average (avg)",
-          "schema": "system_cpu_load_average_15m",
+          "schema": "system_cpu_load_average_5m",
           "options": {
             "label": "Actual",
             "selected_columns": [],
@@ -240,24 +240,25 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
-          "chart_type": "line",
-          "data_source_id": 2,
-          "name": "Machine Memory Utilization",
-          "schema": "",
-          "options": {
-            "label": "Actual vs Total",
-            "selected_columns": [],
-            "order": 5
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "100 - (100 * system_memory_usage_bytes{state='used',hostname=~'.*'} / (4 * 1024 * 1024 * 1024))&step=15m&duration=12h",
+          "query": "round(100 - (100 * system_memory_usage_bytes{ostype=~'linux',state='used',hostname=~'.*'} / (1024 * 1024 * 1024)),0.01)&step=1m&duration=12h",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Machine Memory Utilization",
           "schema": "system_memory_usage_bytes",
+          "options": {
+            "label": "GiB",
+            "selected_columns": [],
+            "order": 5,
+            "groupBy": "hostname"
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=12h&step=1m",
+          "chart_type": "line",
+          "data_source_id": 2,
+          "name": "CPU I/O Wait",
+          "schema": "system_cpu_time_seconds_total",
           "options": {
             "label": "%",
             "selected_columns": [],
@@ -267,13 +268,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "(100 * (sum by (hostname) (rate(system_cpu_time_seconds_total{state=~'wait',hostname=~'.*'}[5m]))) / (sum by (hostname) (rate(system_cpu_time_seconds_total{hostname=~'.*'}[5m]))))&duration=12h&step=15m",
+          "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=12h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
-          "name": "CPU I/O Wait",
-          "schema": "system_cpu_time_seconds_total",
+          "name": "Network Tx Throughput",
+          "schema": "system_network_io_bytes_total",
           "options": {
-            "label": "%",
+            "label": "Bytes/s",
             "selected_columns": [],
             "order": 7,
             "groupBy": "hostname"
@@ -281,13 +282,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (rate(system_network_io_bytes_total{hostname=~'.*',direction='transmit'}[5m]))&duration=12h&step=15m",
+          "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=12h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
-          "name": "Network Bytes Sent",
+          "name": "Network Rx Throughput",
           "schema": "system_network_io_bytes_total",
           "options": {
-            "label": "%",
+            "label": "Bytes/sec",
             "selected_columns": [],
             "order": 8,
             "groupBy": "hostname"
@@ -295,13 +296,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (rate(system_network_io_bytes_total{hostname=~'.*',direction='receive'}[5m]))&duration=12h&step=15m",
+          "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=12h&step=1m",
           "chart_type": "line",
           "data_source_id": 2,
-          "name": "Network Bytes Received",
+          "name": "Network Rx error rate",
           "schema": "system_network_io_bytes_total",
           "options": {
-            "label": "%",
+            "label": "Errors/sec",
             "selected_columns": [],
             "order": 9,
             "groupBy": "hostname"
@@ -309,13 +310,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
-          "chart_type": "table",
+          "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=12h&step=1m",
+          "chart_type": "line",
           "data_source_id": 2,
-          "name": "List of PIDs",
-          "schema": "",
+          "name": "Network Tx error rate",
+          "schema": "system_network_io_bytes_total",
           "options": {
-            "label": "%",
+            "label": "Errors/sec",
             "selected_columns": [],
             "order": 10,
             "groupBy": "hostname"
