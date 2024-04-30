@@ -138,10 +138,10 @@
         },
         {
           "query": "round(sum(system_filesystem_usage_bytes{ostype=~'linux',type='ext4'})/(1024*1024*1024),0.01)",
-          "chart_type": "disk",
+          "chart_type": "counter",
           "data_source_id": 2,
           "name": "Shared Storage Space",
-          "schema": "",
+          "schema": "system_filesystem_usage_bytes",
           "options": {
             "label": "GiB",
             "selected_columns": [],
@@ -150,13 +150,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{ostype=~'linux',mountpoint='/',hostname=~'.*'}))",
-          "chart_type": "disk",
+          "query": "(sum by (hostname) (system_filesystem_inodes_usage{ostype=~'linux',mountpoint='/',hostname=~'.*'}))",
+          "chart_type": "counter",
           "data_source_id": 2,
           "name": "Shared Storage iNodes",
           "schema": "system_filesystem_inodes_usage",
           "options": {
-            "label": "% (Avg of Avg)",
+            "label": "Total",
             "selected_columns": [],
             "order": 11
           },
@@ -169,7 +169,7 @@
           "name": "Open File Descriptors",
           "schema": "open_fd_count",
           "options": {
-            "label": "Actual (Avg of Avg)",
+            "label": "Open FD's"
             "selected_columns": [],
             "order": 12,
             "descriptions": "Open FDs"
