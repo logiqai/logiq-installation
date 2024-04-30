@@ -34,7 +34,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round(avg(sum by (hostname) (round(100 - system_cpu_utilization_ratio{state=~'idle',hostname=~'.*'}*100, 0.1))), 0.01)",
+          "query": "round(avg(sum by (hostname) (round(100 - system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}*100, 0.1))), 0.01)",
           "chart_type": "gauge",
           "data_source_id": 2,
           "name": "CPU Utilization",
@@ -53,7 +53,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round(avg(sum by (hostname) (round(system_memory_utilization_ratio{state=~'used',hostname=~'.*'}*100, 0.1))), 0.01)",
+          "query": "round(avg(sum by (hostname) (round(system_memory_utilization_ratio{ostype=~'linux',state=~'used',hostname=~'.*'}*100, 0.1))), 0.01)",
           "chart_type": "gauge",
           "data_source_id": 2,
           "name": "Machine Memory Utilization",
@@ -70,7 +70,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round(avg by (hostname) (system_cpu_load_average_1m{hostname=~'.*'}), 0.01)",
+          "query": "round(avg by (hostname) (system_cpu_load_average_5m{ostype=~'linux',hostname=~'.*'}), 0.01)",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Load Average",
@@ -83,7 +83,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg(sum by (hostname) (round(jvm_uptime{hostname=~'.*', ostype='linux'}/2/3600000)))",
+          "query": "avg(sum by (hostname) (round(jvm_uptime{ostype=~'linux',hostname=~'.*'}/3600000)))",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "JVM Uptime",
@@ -111,7 +111,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "100 * (sum by (device) (system_filesystem_usage_bytes{hostname=~'.*', job='prom-metrics-collector', state='used',device='/dev/sda1',hostname=~'.*'}) /sum by (device) (system_filesystem_usage_bytes{hostname=~'.*', job='prom-metrics-collector', state=~'free|used'}))&duration=12h&step=15m",
+          "query": "100 * (sum by (device) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state='used',type='ext4',hostname=~'.*'}) /sum by (device) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state=~'free|used'}))&duration=12h&step=15m",
           "chart_type": "disk",
           "data_source_id": 2,
           "name": "Local Storage Space",
@@ -124,7 +124,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{device=~'.*',hostname=~'.*'}))",
+          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{ostype=~'linux',device=~'.*',hostname=~'.*'}))&duration=12h&step=15m",
           "chart_type": "line",
           "data_source_id": 2,
           "name": "Local Storage iNodes",
@@ -137,20 +137,20 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "round(sum(system_filesystem_usage_bytes{ostype=~'linux',type='ext4'})/(1024*1024*1024),0.01)",
           "chart_type": "disk",
           "data_source_id": 2,
           "name": "Shared Storage Space",
           "schema": "",
           "options": {
-            "label": "% (Avg of Avg)",
+            "label": "GiB",
             "selected_columns": [],
             "order": 10
           },
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{mountpoint='/',hostname=~'.*'}))",
+          "query": "avg(sum by (hostname) (system_filesystem_inodes_usage{ostype=~'linux',mountpoint='/',hostname=~'.*'}))",
           "chart_type": "disk",
           "data_source_id": 2,
           "name": "Shared Storage iNodes",
@@ -163,7 +163,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "avg(sum by (hostname) (open_fd_count))",
+          "query": "avg(sum by (hostname) (open_fd_count{ostype=~'linux'}))",
           "chart_type": "counter",
           "data_source_id": 2,
           "name": "Open File Descriptors",
