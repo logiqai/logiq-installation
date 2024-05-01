@@ -26,26 +26,6 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
-          "chart_type": "counter",
-          "name": "Current Head Node",
-          "schema": "",
-          "options": {
-            "label": "% Avg",
-            "order": 2,
-            "description": "Current Head Node",
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
           "query": "round(avg(sum by (hostname) (round(100 - system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}*100, 0.1))), 0.01)",
           "chart_type": "gauge",
           "name": "CPU Utilization",
@@ -81,7 +61,7 @@
               "alert": 60,
               "danger": 80
             },
-            "order": 4,
+            "order": 2,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -100,7 +80,7 @@
           "schema": "system_cpu_load_average_1m",
           "options": {
             "label": "",
-            "order": 5,
+            "order": 6,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -120,27 +100,8 @@
           "options": {
             "label": "Hours (Avg of Avg)",
             "upperLimit": "",
-            "order": 6,
-            "description": "Average uptime across all nodes",
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "",
-          "chart_type": "counter",
-          "name": "Container Exceptions",
-          "schema": "jvm_uptime",
-          "options": {
-            "label": "Actual (Avg of Avg)",
             "order": 7,
+            "description": "Average uptime across all nodes",
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -216,7 +177,7 @@
           "schema": "system_filesystem_inodes_usage",
           "options": {
             "label": "Total",
-            "order": 11,
+            "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -235,7 +196,7 @@
           "schema": "open_fd_count",
           "options": {
             "label": "Average Open FD's",
-            "order": 12,
+            "order": 5,
             "descriptions": "Open FDs",
             "plot" : {
               "xLabel" : "Timestamp",
