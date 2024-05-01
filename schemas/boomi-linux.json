@@ -236,7 +236,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round((1-(max_over_time(system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}[5m])))*100,0.01)&duration=1.000h&step=1m",
+          "query": "round((1-(avg_over_time(system_cpu_utilization_ratio{ostype=~'linux',state=~'idle',hostname=~'.*'}[5m])))*100,0.01)&duration=1.000h&step=1m",
           "chart_type": "line",
           "name": "CPU Utilization (Avg)",
           "schema": "system_cpu_utilization_ratio",
@@ -649,12 +649,12 @@
       "order": "4",
       "queriesList": [
         {
-          "query": "",
+          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
           "name": "Heap Usage",
           "schema": "process_runtime_jvm_memory_usage_bytes",
           "options": {
-            "label": "Used vs Max",
+            "label": "%",
             "order": 1,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -668,9 +668,9 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',hostname=~'.*'})&duration=1h&step=1m",
+          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='non_heap', ostype=~'linux', hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Heap Usage",
+          "name": "Non-Heap Usage",
           "schema": "process_runtime_jvm_memory_usage_bytes",
           "options": {
             "label": "%",
@@ -687,12 +687,12 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "round(100*increase(process_runtime_jvm_gc_duration_seconds_sum{ostype=~'linux',hostname=~'.*'} [5m])/300,0.01)&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Non-Heap Usage",
+          "name": "Average GC Time",
           "schema": "",
           "options": {
-            "label": "Used vs Max",
+            "label": "Actual",
             "order": 3,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -706,51 +706,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='non_heap', hostname=~'.*'})&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Non-Heap Usage",
-          "schema": "process_runtime_jvm_memory_usage_bytes",
-          "options": {
-            "label": "%",
-            "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "",
-          "chart_type": "line",
-          "name": "Average GC Time",
-          "schema": "",
-          "options": {
-            "label": "Actual",
-            "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "sum by (hostname) (memory_pool_used_g1_old_gen_heap)&duration=1h&step=1m",
+          "query": "sum by (hostname) (memory_pool_used_g1_old_gen_heap{ostype=~'linux',hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
           "name": "Memory Pool",
           "schema": "memory_pool_used_g1_old_gen_heap",
           "options": {
             "label": "Used vs Max",
-            "order": 6,
+            "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
