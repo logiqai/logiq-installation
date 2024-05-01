@@ -675,7 +675,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',hostname=~'.*'})&duration=1h&step=1m",
+          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',ostype=~'linux',hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
           "name": "JVM Heap Usage",
           "schema": "process_runtime_jvm_memory_usage_bytes",
