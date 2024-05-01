@@ -126,7 +126,7 @@
               "yLabel": "value",
               "x" : "Timestamp",
               "y": ["value"],
-              "groupBy": "",
+              "groupBy": "hostname",
               "errorColumn": ""
             }
           },
@@ -161,7 +161,7 @@
             "order": 10,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "GiB",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -180,7 +180,7 @@
             "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "Count",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -200,7 +200,7 @@
             "descriptions": "Open FDs",
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "File Descriptors",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -226,7 +226,7 @@
             "order": 1,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -245,7 +245,7 @@
             "order": 2,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -264,7 +264,7 @@
             "order": 3,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "avg # of runnable processes",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -283,7 +283,7 @@
             "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "avg # of runnable processes",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -302,7 +302,7 @@
             "order": 5,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "seconds",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -324,11 +324,11 @@
             "name": "Network Tx Throughput",
             "schema": "system_network_io_bytes_total",
             "options": {
-              "label": "Bytes/s",
+              "label": "Bytes/sec",
               "order": 7,
               "plot" : {
                 "xLabel" : "Timestamp",
-                "yLabel": "value",
+                "yLabel": "Bytes/sec",
                 "x" : "Timestamp",
                 "y": ["value"],
                 "groupBy": "hostname",
@@ -347,7 +347,7 @@
               "order": 8,
               "plot" : {
                 "xLabel" : "Timestamp",
-                "yLabel": "value",
+                "yLabel": "Bytes/sec",
                 "x" : "Timestamp",
                 "y": ["value"],
                 "groupBy": "hostname",
@@ -366,7 +366,7 @@
               "order": 9,
               "plot" : {
                 "xLabel" : "Timestamp",
-                "yLabel": "value",
+                "yLabel": "Errors/sec",
                 "x" : "Timestamp",
                 "y": ["value"],
                 "groupBy": "hostname",
@@ -385,7 +385,7 @@
               "order": 10,
               "plot" : {
                 "xLabel" : "Timestamp",
-                "yLabel": "value",
+                "yLabel": "Errors/sec",
                 "x" : "Timestamp",
                 "y": ["value"],
                 "groupBy": "hostname",
@@ -426,11 +426,11 @@
           "name": "Local Storage iNodes",
           "schema": "",
           "options": {
-            "label": "",
+            "label": "Count",
             "order": 2,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "",
+              "yLabel": "Count",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -445,7 +445,7 @@
           "name": "Local Storage Write I/O",
           "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "Bytes/sec",
             "order": 3,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -464,11 +464,11 @@
           "name": "Local Storage Read I/O",
           "schema": "",
           "options": {
-            "label": "Actual",
+            "label": "Bytes/sec",
             "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "Bytes/sec",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -494,7 +494,7 @@
             "order": 1,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "GiB",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -513,7 +513,7 @@
             "order": 2,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -532,7 +532,7 @@
             "order": 3,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "Bytes",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -551,7 +551,7 @@
             "order": 4,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "Bytes",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -570,7 +570,7 @@
             "order": 5,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -589,7 +589,7 @@
             "order": 6,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "value",
+              "yLabel": "Bytes",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
