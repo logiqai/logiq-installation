@@ -26,6 +26,28 @@
                         }
                     },
                     "data_source_name": "Apica Monitoring"
+                },
+                {
+                    "query": "sum by (hostname) (jvm_start_time{hostname=~'.*'})",
+                    "chart_type": "counter",
+                    "name": "JVM Start Time",
+                    "schema": "jvm_start_time",
+                    "options": {
+                        "label": "Actual 2",
+                        "order": 2,
+                        "plot": {
+                            "xLabel": "Timestamp",
+                            "yLabel": "value yLabel 1",
+                            "label": "Actual label 1",
+                            "x": "Timestamp",
+                            "y": [
+                                "value"
+                            ],
+                            "groupBy": "",
+                            "errorColumn": ""
+                        }
+                    },
+                    "data_source_name": "Apica Monitoring"
                 }
             ]
         }
