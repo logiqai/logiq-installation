@@ -293,108 +293,13 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (system_memory_usage_bytes{ostype='linux', hostname=~'.*'})&duration=1h&step=5m",
-          "chart_type": "line",
-          "name": "Machine Memory Utilization",
-          "schema": "system_memory_usage_bytes",
-          "options": {
-            "label": "GiB",
-            "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
           "query": "round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=1h&step=1m",
           "chart_type": "line",
           "name": "CPU I/O Wait",
           "schema": "system_cpu_time_seconds_total",
           "options": {
             "label": "%",
-            "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Network Tx Throughput",
-          "schema": "system_network_io_bytes_total",
-          "options": {
-            "label": "Bytes/s",
-            "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Network Rx Throughput",
-          "schema": "system_network_io_bytes_total",
-          "options": {
-            "label": "Bytes/sec",
-            "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Network Rx error rate",
-          "schema": "system_network_io_bytes_total",
-          "options": {
-            "label": "Errors/sec",
-            "order": 9,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
-          "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Network Tx error rate",
-          "schema": "system_network_io_bytes_total",
-          "options": {
-            "label": "Errors/sec",
-            "order": 10,
+            "order": 5,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -409,9 +314,92 @@
       ]
     },
     {
+        "key": "network",
+        "title": "Network",
+        "order": "3",
+        "queriesList": [
+          {
+            "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Tx Throughput",
+            "schema": "system_network_io_bytes_total",
+            "options": {
+              "label": "Bytes/s",
+              "order": 7,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "value",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_io_bytes_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Rx Throughput",
+            "schema": "system_network_io_bytes_total",
+            "options": {
+              "label": "Bytes/sec",
+              "order": 8,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "value",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='receive'}[5m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Rx error rate",
+            "schema": "system_network_io_bytes_total",
+            "options": {
+              "label": "Errors/sec",
+              "order": 9,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "value",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_errors_total{ostype=~'linux',hostname=~'.*',direction='transmit'}[5m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Tx error rate",
+            "schema": "system_network_io_bytes_total",
+            "options": {
+              "label": "Errors/sec",
+              "order": 10,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "value",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          }
+            ]
+    },
+    {
       "key": "storage",
       "title": "Storage",
-      "order": "3",
+      "order": "5",
       "queriesList": [
         {
           "query": "",
@@ -649,12 +637,12 @@
       "order": "4",
       "queriesList": [
         {
-          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',hostname=~'.*'})&duration=1h&step=1m",
+          "query": "sum by (hostname) (system_memory_usage_bytes{ostype='linux', hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Heap Usage",
-          "schema": "process_runtime_jvm_memory_usage_bytes",
+          "name": "Memory Usage",
+          "schema": "system_memory_usage_bytes",
           "options": {
-            "label": "%",
+            "label": "GiB",
             "order": 1,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -668,10 +656,10 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='non_heap', ostype=~'linux', hostname=~'.*'})&duration=1h&step=1m",
+          "query": "100*sum by (hostname) (1-system_memory_utilization_ratio{ostype='linux', hostname=~'.*',state='free'})&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Non-Heap Usage",
-          "schema": "process_runtime_jvm_memory_usage_bytes",
+          "name": "Memory utilization",
+          "schema": "system_memory_usage_bytes",
           "options": {
             "label": "%",
             "order": 2,
@@ -687,13 +675,51 @@
           "data_source_name": "Apica Monitoring"
         },
         {
+          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='heap',hostname=~'.*'})&duration=1h&step=1m",
+          "chart_type": "line",
+          "name": "JVM Heap Usage",
+          "schema": "process_runtime_jvm_memory_usage_bytes",
+          "options": {
+            "label": "Bytes",
+            "order": 3,
+            "plot" : {
+              "xLabel" : "Timestamp",
+              "yLabel": "value",
+              "x" : "Timestamp",
+              "y": ["value"],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "sum by (hostname) (process_runtime_jvm_memory_usage_bytes{type='non_heap', ostype=~'linux', hostname=~'.*'})&duration=1h&step=1m",
+          "chart_type": "line",
+          "name": "JVM Non-Heap Usage",
+          "schema": "process_runtime_jvm_memory_usage_bytes",
+          "options": {
+            "label": "Bytes",
+            "order": 4,
+            "plot" : {
+              "xLabel" : "Timestamp",
+              "yLabel": "value",
+              "x" : "Timestamp",
+              "y": ["value"],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
           "query": "round(100*increase(process_runtime_jvm_gc_duration_seconds_sum{ostype=~'linux',hostname=~'.*'} [5m])/300,0.01)&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Average GC Time",
+          "name": "JVM GC Time",
           "schema": "",
           "options": {
-            "label": "Actual",
-            "order": 3,
+            "label": "%",
+            "order": 5,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
@@ -708,11 +734,11 @@
         {
           "query": "sum by (hostname) (memory_pool_used_g1_old_gen_heap{ostype=~'linux',hostname=~'.*'})&duration=1h&step=1m",
           "chart_type": "line",
-          "name": "Memory Pool",
+          "name": "JVM Memory Pool",
           "schema": "memory_pool_used_g1_old_gen_heap",
           "options": {
-            "label": "Used vs Max",
-            "order": 4,
+            "label": "Bytes",
+            "order": 6,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
