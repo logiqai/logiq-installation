@@ -402,7 +402,7 @@
       "order": "5",
       "queriesList": [
         {
-          "query": "100 * (sum by (device) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state='used',type='ext4',hostname=~'.*'}) /sum by (device) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state=~'.*'}))&duration=1h&step=1m",
+          "query": "100 * (sum by (hostname) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state='used',type='ext4',hostname=~'.*'}) /sum by (device) (system_filesystem_usage_bytes{ostype=~'linux',hostname=~'.*', job='prom-metrics-collector', state=~'.*'}))&duration=1h&step=1m",
           "chart_type": "line",
           "name": "Local Storage Space",
           "schema": "",
