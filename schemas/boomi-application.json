@@ -3,7 +3,7 @@
     {
       "key": "jvm",
       "title": "JVM",
-      "order": "2",
+      "order": "1",
       "queriesList": [
         {
           "query": "sum by (hostname) (jvm_start_time{hostname=~'.*'})",
@@ -26,7 +26,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (jvm_uptime{hostname=~'.*'})/3600000",
+          "query": "round(sum by (hostname) (jvm_uptime{hostname=~'.*'})/3600000,1)",
           "chart_type": "Table",
           "name": "JVM Uptime",
           "schema": "jvm_uptime",
@@ -35,7 +35,7 @@
             "order": 2,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "",
+              "yLabel": "Hrs",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "",
@@ -280,7 +280,7 @@
     {
       "key": "atom",
       "title": "Atom",
-      "order": "1",
+      "order": "2",
       "queriesList": [
         {
           "query": "sum by (hostname) (job_scheduler_store_percent_usage{hostname=~'.*'})&duration=1h&step=1m",
