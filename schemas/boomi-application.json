@@ -1,33 +1,6 @@
 {
   "tabs": [
     {
-      "key": "config",
-      "title": "Config",
-      "order": "3",
-      "queriesList": [
-        {
-          "query": "",
-          "chart_type": "Table",
-          "name": "Input Args",
-          "schema": "",
-          "options": {
-            "label": "Actual",
-            "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "value",
-              "label": "Actual",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        }
-      ]
-    },
-    {
       "key": "jvm",
       "title": "JVM",
       "order": "2",
@@ -227,7 +200,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (heap_memory_usage_max{hostname=~'.*'})",
+          "query": "sum by (hostname) (non_heap_memory_usage_max{hostname=~'.*'})",
           "chart_type": "table",
           "name": "Non heap memory max",
           "schema": "non_heap_memory_usage_max",
@@ -246,16 +219,16 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (heap_memory_usage_max{hostname=~'.*'})",
-          "chart_type": "table",
-          "name": "Non heap memory max",
-          "schema": "non_heap_memory_usage_max",
+          "query": "round(100*increase(process_runtime_jvm_gc_duration_seconds_sum{ostype=~'linux',hostname=~'.*'} [5m])/300,0.01)&duration=1h&step=1m",
+          "chart_type": "line",
+          "name": "JVM garbage collection time %",
+          "schema": "process_runtime_jvm_gc_duration_seconds_count",
           "options": {
-            "label": "Bytes",
-            "order": 11,
+            "label": "%",
+            "order": 12,
             "plot" : {
               "xLabel" : "Timestamp",
-              "yLabel": "Bytes",
+              "yLabel": "%",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
@@ -271,7 +244,7 @@
           "schema": "process_runtime_jvm_gc_duration_seconds_count",
           "options": {
             "label": "Count",
-            "order": 12,
+            "order": 13,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "Count",
@@ -286,11 +259,11 @@
         {
           "query": "sum by (hostname,action) (process_runtime_jvm_gc_duration_seconds_sum{hostname=~'.*'})",
           "chart_type": "table",
-          "name": "JVM garbage collection time",
+          "name": "JVM garbage collection time (seconds)",
           "schema": "process_runtime_jvm_gc_duration_seconds_sum",
           "options": {
             "label": "Seconds",
-            "order": 13,
+            "order": 14,
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "Seconds",
@@ -681,6 +654,33 @@
             "plot" : {
               "xLabel" : "Timestamp",
               "yLabel": "value",
+              "x" : "Timestamp",
+              "y": ["value"],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "config",
+      "title": "Config",
+      "order": "3",
+      "queriesList": [
+        {
+          "query": "",
+          "chart_type": "Table",
+          "name": "Input Args",
+          "schema": "",
+          "options": {
+            "label": "Actual",
+            "order": 1,
+            "plot" : {
+              "xLabel" : "Timestamp",
+              "yLabel": "value",
+              "label": "Actual",
               "x" : "Timestamp",
               "y": ["value"],
               "groupBy": "hostname",
