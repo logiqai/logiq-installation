@@ -376,7 +376,7 @@
             "data_source_name": "Apica Monitoring"
           },
           {
-            "query": "round(sum by (hostname) (rate(system_network_dropped_total{ostype=~'linux',hostname=~'.*',state='ESTABLISHED'}[15m])),0.01)&duration=1h&step=1m",
+            "query": "round(sum by (hostname) (rate(system_network_dropped_total{ostype=~'linux',hostname=~'.*'}[15m])),0.01)&duration=1h&step=1m",
             "chart_type": "line",
             "name": "Network Packets Dropped",
             "schema": "system_network_dropped_total",
@@ -395,7 +395,7 @@
             "data_source_name": "Apica Monitoring"
           },
           {
-            "query": "round(sum by (hostname) (rate(system_network_packets_total{ostype=~'linux',hostname=~'.*',state='ESTABLISHED'}[15m])),0.01)&duration=1h&step=1m",
+            "query": "round(sum by (hostname) (rate(system_network_packets_total{ostype=~'linux',hostname=~'.*'}[15m])),0.01)&duration=1h&step=1m",
             "chart_type": "line",
             "name": "Network Packets Transferred",
             "schema": "system_network_packets_total",
