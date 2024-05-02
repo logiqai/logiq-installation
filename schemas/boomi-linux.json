@@ -145,7 +145,7 @@
               "yLabel": "value",
               "x" : "Timestamp",
               "y": ["value"],
-              "groupBy": "",
+              "groupBy": "hostname",
               "errorColumn": ""
             }
           },
