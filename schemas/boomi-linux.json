@@ -325,7 +325,7 @@
             "schema": "system_network_io_bytes_total",
             "options": {
               "label": "Bytes/sec",
-              "order": 7,
+              "order": 1,
               "plot" : {
                 "xLabel" : "Timestamp",
                 "yLabel": "Bytes/sec",
@@ -344,10 +344,67 @@
             "schema": "system_network_io_bytes_total",
             "options": {
               "label": "Bytes/sec",
-              "order": 8,
+              "order": 2,
               "plot" : {
                 "xLabel" : "Timestamp",
                 "yLabel": "Bytes/sec",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_connections{ostype=~'linux',hostname=~'.*',state='ESTABLISHED'}[15m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network connections",
+            "schema": "system_network_connections",
+            "options": {
+              "label": "Connections/sec",
+              "order": 3,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "Connections/sec",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_dropped_total{ostype=~'linux',hostname=~'.*',state='ESTABLISHED'}[15m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Packets Dropped",
+            "schema": "system_network_dropped_total",
+            "options": {
+              "label": "Packets/sec",
+              "order": 4,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "Packets/sec",
+                "x" : "Timestamp",
+                "y": ["value"],
+                "groupBy": "hostname",
+                "errorColumn": ""
+              }
+            },
+            "data_source_name": "Apica Monitoring"
+          },
+          {
+            "query": "round(sum by (hostname) (rate(system_network_packets_total{ostype=~'linux',hostname=~'.*',state='ESTABLISHED'}[15m])),0.01)&duration=1h&step=1m",
+            "chart_type": "line",
+            "name": "Network Packets Transferred",
+            "schema": "system_network_packets_total",
+            "options": {
+              "label": "Packets/sec",
+              "order": 5,
+              "plot" : {
+                "xLabel" : "Timestamp",
+                "yLabel": "Packets/sec",
                 "x" : "Timestamp",
                 "y": ["value"],
                 "groupBy": "hostname",
@@ -363,7 +420,7 @@
             "schema": "system_network_io_bytes_total",
             "options": {
               "label": "Errors/sec",
-              "order": 9,
+              "order": 6,
               "plot" : {
                 "xLabel" : "Timestamp",
                 "yLabel": "Errors/sec",
@@ -382,7 +439,7 @@
             "schema": "system_network_io_bytes_total",
             "options": {
               "label": "Errors/sec",
-              "order": 10,
+              "order": 7,
               "plot" : {
                 "xLabel" : "Timestamp",
                 "yLabel": "Errors/sec",
