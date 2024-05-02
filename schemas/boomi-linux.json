@@ -561,8 +561,8 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round((sum by (hostname) (system_linux_memory_available_bytes{ostype='linux', hostname=~'.*'}))/(1024*1024*1024),0.01)&duration=1h&step=1m",
-          "chart_type": "Table",
+          "query": "round((sum by (hostname) (system_linux_memory_available_bytes{ostype='linux', hostname=~'.*'}))/(1024*1024*1024),0.01)",
+          "chart_type": "table",
           "name": "Memory available (GiB)",
           "schema": "system_linux_memory_available_bytes",
           "options": {
@@ -581,7 +581,7 @@
         },
         {
           "query": "100*sum by (hostname) (1-system_memory_utilization_ratio{ostype='linux', hostname=~'.*',state='free'})&duration=1h&step=1m",
-          "chart_type": "Table",
+          "chart_type": "line",
           "name": "Memory utilization",
           "schema": "system_memory_usage_bytes",
           "options": {
