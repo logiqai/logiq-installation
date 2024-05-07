@@ -6,10 +6,10 @@
             "order": "5",
             "queriesList": [
                 {
-                    "query": "sum by (hostname) (thread_count{hostname=~'.*'})&duration=1h&step=5m",
+                    "query": "go_gc_duration_seconds&duration=1h&step=5m",
                     "chart_type": "line",
-                    "name": "Thread Count",
-                    "schema": "thread_count",
+                    "name": "GC Duration",
+                    "schema": "go_gc_duration_seconds",
                     "options": {
                         "order": 1,
                         "label": "Actual",
@@ -28,10 +28,10 @@
                     "data_source_name": "Apica Monitoring"
                 },
                 {
-                    "query": "sum by (hostname) (jvm_start_time{hostname=~'.*'})",
+                    "query": "go_goroutines&duration=1h&step=5m",
                     "chart_type": "counter",
-                    "name": "JVM Start Time",
-                    "schema": "jvm_start_time",
+                    "name": "Go routines",
+                    "schema": "go_goroutines",
                     "options": {
                         "label": "Actual 2",
                         "order": 2,
