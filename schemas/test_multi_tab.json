@@ -1,0 +1,170 @@
+{
+  "tabs": [
+    {
+      "key": "overview",
+      "title": "Overview",
+      "order": "1",
+      "queriesList": [
+        {
+          "query": "go_goroutines&duration=1h&step=5m",
+          "chart_type": "Table",
+          "name": "go_goroutines",
+          "schema": "go_goroutines",
+          "options": {
+            "label": "Actual",
+            "order": 1,
+            "description": "Atom Status",
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "value",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "go_info&duration=1h&step=5m",
+          "chart_type": "gauge",
+          "name": "go_info",
+          "schema": "go_info",
+          "options": {
+            "label": "% (Avg of Avg)",
+            "upperLimit": "",
+            "order": 3,
+            "zone": {
+              "alert": 60,
+              "danger": 80
+            },
+            "description": "CPU Utilization",
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "value",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "storage",
+      "title": "Storage",
+      "order": "5",
+      "queriesList": [
+        {
+          "query": "go_threads&duration=1h&step=5m",
+          "chart_type": "line",
+          "name": "Local Storage Space",
+          "schema": "go_threads",
+          "options": {
+            "label": "%",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "%",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "go_memstats_frees_total&duration=1h&step=5m",
+          "chart_type": "line",
+          "name": "Local Storage iNodes",
+          "schema": "",
+          "options": {
+            "label": "Count",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "Count",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "memory",
+      "title": "Memory",
+      "order": "4",
+      "queriesList": [
+        {
+          "query": "go_memstats_gc_sys_bytes&duration=1h&step=5m",
+          "chart_type": "line",
+          "name": "go_memstats_gc_sys_bytes",
+          "schema": "go_memstats_gc_sys_bytes",
+          "options": {
+            "label": "GiB",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "GiB",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "go_memstats_mspan_sys_bytes&duration=1h&step=5m",
+          "chart_type": "table",
+          "name": "Memory available (GiB)",
+          "schema": "go_memstats_mspan_sys_bytes",
+          "options": {
+            "label": "GiB",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "%",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    }
+  ],
+  "header": {
+    "dateTimeRange": true,
+    "dropdowns": [
+      {
+        "atom": {
+          "query": "sum by (hostname) (target_info{ostype=~'linux'})",
+          "name": "Atom Selection",
+          "data_source_name": "Apica Monitoring"
+        }
+      }
+    ]
+  }
+}
