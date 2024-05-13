@@ -4,6 +4,7 @@
       "key": "overview",
       "title": "Overview",
       "order": "1",
+      "type": "metrics",
       "queriesList": [
         {
           "query": "sum by (hostname) (target_info{ostype=~'linux',hostname=~'.*'})",
@@ -214,6 +215,7 @@
     {
       "key": "compute",
       "title": "Compute",
+      "type": "metrics",
       "order": "2",
       "queriesList": [
         {
@@ -316,6 +318,7 @@
     {
         "key": "network",
         "title": "Network",
+        "type": "metrics",
         "order": "3",
         "queriesList": [
           {
@@ -456,6 +459,7 @@
     {
       "key": "storage",
       "title": "Storage",
+      "type": "metrics",
       "order": "5",
       "queriesList": [
         {
@@ -539,6 +543,7 @@
     {
       "key": "memory",
       "title": "Memory",
+      "type": "metrics",
       "order": "4",
       "queriesList": [
         {
@@ -694,6 +699,18 @@
           "data_source_name": "Apica Monitoring"
         }
       ]
+    },
+    {
+      "key": "alertsList",
+      "title": "Alerts",
+      "order": "5"
+    },
+    {
+      "key": "logsView",
+      "title": "Logs",
+      "order": "6",
+      "namespace": "boomi",
+      "app_name": "logs"
     }
   ],
   "header": {
