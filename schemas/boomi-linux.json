@@ -703,12 +703,14 @@
     {
       "key": "alertsList",
       "title": "Alerts",
-      "order": "5"
+      "order": "5",
+      "type": "alerts"
     },
     {
       "key": "logsView",
       "title": "Logs",
       "order": "6",
+      "type": "logs",
       "namespace": "boomi",
       "app_name": "logs"
     }
