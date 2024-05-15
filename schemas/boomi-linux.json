@@ -701,13 +701,13 @@
       ]
     },
     {
-      "key": "alertsList",
+      "key": "Alerts",
       "title": "Alerts",
       "order": "5",
       "type": "alerts"
     },
     {
-      "key": "logsView",
+      "key": "Logs",
       "title": "Logs",
       "order": "6",
       "type": "logs",
