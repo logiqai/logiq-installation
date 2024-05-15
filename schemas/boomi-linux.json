@@ -711,8 +711,8 @@
       "title": "Logs",
       "order": "6",
       "type": "logs",
-      "namespace": "boomi",
-      "app_name": "logs"
+      "namespace": "Linux_5_OCI_Atom_lcl_container18",
+      "app_name": "boomi-log"
     }
   ],
   "header": {
