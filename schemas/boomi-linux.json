@@ -711,8 +711,8 @@
       "title": "Logs",
       "order": "6",
       "type": "logs",
-      "namespace": "testingA",
-      "app_name": "finite-test-engine"
+      "namespace": "otlplogs",
+      "app_name": "boomi"
     }
   ],
   "header": {
