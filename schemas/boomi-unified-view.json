@@ -1402,8 +1402,8 @@
       "title": "Logs",
       "order": "10",
       "type": "logs",
-      "namespace": "boomi",
-      "app_name": "logs"
+      "namespace": "otlplogs",
+      "app_name": "boomi"
     }
   ],
   "header": {
