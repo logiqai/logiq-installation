@@ -7,7 +7,7 @@
       "type": "metrics",
       "queriesList": [
         {
-          "query": "sum by (hostname) (target_info{ostype=~'linux',hostname=~'.*'})",
+          "query": "sum by (hostname) (target_info{ostype=~'linux|windows',hostname=~'.*'})",
           "chart_type": "Table",
           "name": "Atom Status",
           "schema": "target_info",
@@ -1411,11 +1411,18 @@
     "dropdowns": [
       {
         "atom": {
-          "query": "sum by (hostname) (target_info{ostype=~'linux'})",
+          "query": "sum by (hostname) (target_info{ostype=~'linux|windows'})",
           "name": "Atom Selection",
           "data_source_name": "Apica Monitoring"
         }
-      }
+      },
+     {
+       "runtime": {
+         "query": "sum by (hostname) (target_info{ostype=~'linux|windows'})",
+         "name": "Runtime selection",
+         "data_source_name": "Apica Monitoring"
+       }
+     }
     ]
   }
 }
