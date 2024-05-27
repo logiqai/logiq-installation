@@ -1411,14 +1411,14 @@
     "dropdowns": [
       {
         "atom": {
-          "query": "sum by (hostname) (target_info{ostype=~'linux|windows'})",
+          "query": "sum by (hostname) (target_info{ostype=~'linux|windows',runtime=~'.*'})",
           "name": "Atom Selection",
           "data_source_name": "Apica Monitoring"
         }
       },
      {
        "runtime": {
-         "query": "sum by (hostname) (target_info{ostype=~'linux|windows'})",
+         "query": "sum by (runtime) (target_info{ostype=~'linux|windows'})",
          "name": "Runtime selection",
          "data_source_name": "Apica Monitoring"
        }
