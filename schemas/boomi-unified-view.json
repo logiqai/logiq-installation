@@ -295,6 +295,25 @@
           "data_source_name": "Apica Monitoring"
         },
         {
+          "query": "sum by (hostname,status) (system_processes_count{ostype=~'linux|windows'})&duration=1.000h&step=1m",
+          "chart_type": "Table",
+          "name": "List of PID's",
+          "schema": "system_processes_count",
+          "options": {
+            "label": "Actual",
+            "order": 1,
+            "plot" : {
+              "xLabel" : "Timestamp",
+              "yLabel": "value",
+              "x" : "Timestamp",
+              "y": ["value"],
+              "groupBy": "",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
           "query": "round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=1h&step=1m",
           "chart_type": "line",
           "name": "CPU I/O Wait",
