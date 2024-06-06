@@ -358,7 +358,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux|windows',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=1h&step=1m",
+          "query": "100*round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux|windows',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=1h&step=1m",
           "chart_type": "line",
           "name": "CPU I/O Wait",
           "schema": "system_cpu_time_seconds_total",
@@ -373,6 +373,23 @@
               "groupBy": "hostname",
               "errorColumn": ""
             }
+          },
+          "alert": {
+            "active": "True",
+            "name": "CPU I/O Wait Alert",
+            "options": {
+              "alertType": "simple alert",
+              "anomalySwitch": false,
+              "column": "value",
+              "op": ">",
+              "selectionCondition": "all",
+              "timeColumn": "",
+              "muted": false,
+              "trackDuration": 15,
+              "value": 90,
+              "severityType": "warning"
+            },
+            "rearm": 300
           },
           "data_source_name": "Apica Monitoring"
         },
