@@ -15,11 +15,13 @@
             "label": "Actual",
             "order": 1,
             "description": "Atom Status",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -40,11 +42,13 @@
               "danger": 80
             },
             "description": "CPU Utilization",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -63,11 +67,13 @@
               "danger": 80
             },
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -82,11 +88,13 @@
           "options": {
             "label": "",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -103,11 +111,13 @@
             "upperLimit": "",
             "order": 7,
             "description": "Average uptime across all nodes",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -122,11 +132,13 @@
           "options": {
             "label": "%",
             "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -141,11 +153,13 @@
           "options": {
             "label": "Average inodes",
             "order": 9,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -160,11 +174,13 @@
           "options": {
             "label": "GiB",
             "order": 10,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "GiB",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -179,11 +195,13 @@
           "options": {
             "label": "Total",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -199,11 +217,13 @@
             "label": "Average Open FD's",
             "order": 5,
             "descriptions": "Open FDs",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "File Descriptors",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -231,7 +251,6 @@
             "label": "Actual (Avg of Avg)",
             "order": 12,
             "descriptions": "Container Exceptions"
-
           },
           "data_source_name": "Apica Monitoring"
         }
@@ -251,11 +270,13 @@
           "options": {
             "label": "%",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -270,11 +291,13 @@
           "options": {
             "label": "%",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -289,11 +312,13 @@
           "options": {
             "label": "Actual",
             "order": 3,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "avg # of runnable processes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -308,11 +333,13 @@
           "options": {
             "label": "Actual",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "avg # of runnable processes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -327,11 +354,13 @@
           "options": {
             "label": "Actual vs Total",
             "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Actual vs Total",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -346,11 +375,13 @@
           "options": {
             "label": "%",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -365,11 +396,13 @@
           "options": {
             "label": "%",
             "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "seconds",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -401,11 +434,13 @@
           "options": {
             "label": "%",
             "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "seconds",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -420,11 +455,13 @@
           "options": {
             "label": "%",
             "order": 9,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "seconds",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -439,11 +476,13 @@
           "options": {
             "label": "%",
             "order": 10,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "seconds",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -466,11 +505,13 @@
           "options": {
             "label": "Actual vs Total",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -485,14 +526,33 @@
           "options": {
             "label": "%",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
+          },
+          "alert": {
+            "active": "True",
+            "name": "Warn When Local Storage > 80%",
+            "options": {
+              "alertType": "simple alert",
+              "anomalySwitch": false,
+              "column": "value",
+              "op": ">",
+              "selectionCondition": "all",
+              "timeColumn": "",
+              "muted": false,
+              "trackDuration": 15,
+              "value": 80,
+              "severityType": "warning"
+            },
+            "rearm": 300
           },
           "data_source_name": "Apica Monitoring"
         },
@@ -504,11 +564,13 @@
           "options": {
             "label": "Count",
             "order": 3,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -523,11 +585,13 @@
           "options": {
             "label": "Count",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -542,11 +606,13 @@
           "options": {
             "label": "Bytes/sec",
             "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -561,11 +627,13 @@
           "options": {
             "label": "Bytes/sec",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -580,11 +648,13 @@
           "options": {
             "label": "Actual vs Total",
             "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -599,11 +669,13 @@
           "options": {
             "label": "%",
             "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -618,11 +690,13 @@
           "options": {
             "label": "Actual vs Total",
             "order": 9,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -637,11 +711,13 @@
           "options": {
             "label": "%",
             "order": 10,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -656,11 +732,13 @@
           "options": {
             "label": "",
             "order": 11,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -675,11 +753,13 @@
           "options": {
             "label": "",
             "order": 12,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -702,11 +782,13 @@
           "options": {
             "label": "GiB",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "GiB",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -721,11 +803,13 @@
           "options": {
             "label": "GiB",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -740,11 +824,13 @@
           "options": {
             "label": "%",
             "order": 3,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -759,11 +845,13 @@
           "options": {
             "label": "Bytes",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -778,11 +866,13 @@
           "options": {
             "label": "Bytes",
             "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -797,11 +887,13 @@
           "options": {
             "label": "Bytes",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -816,11 +908,13 @@
           "options": {
             "label": "Bytes",
             "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -835,11 +929,13 @@
           "options": {
             "label": "Bytes",
             "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -862,11 +958,13 @@
           "options": {
             "label": "Bytes/sec",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -881,11 +979,13 @@
           "options": {
             "label": "Bytes/sec",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -900,11 +1000,13 @@
           "options": {
             "label": "Connections/sec",
             "order": 3,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Connections/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -919,11 +1021,13 @@
           "options": {
             "label": "Packets/sec",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Packets/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -938,11 +1042,13 @@
           "options": {
             "label": "Packets/sec",
             "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Packets/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -957,11 +1063,13 @@
           "options": {
             "label": "Errors/sec",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Errors/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -976,11 +1084,13 @@
           "options": {
             "label": "Errors/sec",
             "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Errors/sec",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1003,11 +1113,13 @@
             "label": "Time since epoch in milliseconds",
             "order": 1,
             "description": "JVM start time",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -1022,11 +1134,13 @@
           "options": {
             "label": "JVM Uptime in hours",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Hrs",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "",
               "errorColumn": ""
             }
@@ -1041,12 +1155,14 @@
           "options": {
             "order": 3,
             "label": "Actual",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
               "label": "Actual",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1061,12 +1177,14 @@
           "options": {
             "order": 4,
             "label": "",
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
               "label": "",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1081,11 +1199,13 @@
           "options": {
             "label": "Loaded Classes Count",
             "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1100,12 +1220,14 @@
           "options": {
             "label": "Actual vs Max",
             "order": 6,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
               "label": "Actual vs Max",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1120,11 +1242,13 @@
           "options": {
             "label": "%",
             "order": 7,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1139,11 +1263,13 @@
           "options": {
             "label": "Used vs Max",
             "order": 8,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "__name__",
               "errorColumn": ""
             }
@@ -1158,11 +1284,13 @@
           "options": {
             "label": "Used vs Max",
             "order": 10,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1177,11 +1305,13 @@
           "options": {
             "label": "%",
             "order": 10,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Bytes",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1196,11 +1326,13 @@
           "options": {
             "label": "%",
             "order": 12,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1215,11 +1347,13 @@
           "options": {
             "label": "Count",
             "order": 13,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1234,11 +1368,13 @@
           "options": {
             "label": "Seconds",
             "order": 14,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "Seconds",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1260,11 +1396,13 @@
           "options": {
             "label": "%",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1279,11 +1417,13 @@
           "options": {
             "label": "%",
             "order": 2,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1298,11 +1438,13 @@
           "options": {
             "label": "%",
             "order": 3,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1317,11 +1459,13 @@
           "options": {
             "label": "%",
             "order": 4,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "%",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1336,11 +1480,13 @@
           "options": {
             "label": "",
             "order": 13,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1355,11 +1501,13 @@
           "options": {
             "label": "Actual",
             "order": 14,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1374,11 +1522,13 @@
           "options": {
             "label": "Actual",
             "order": 15,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1393,11 +1543,13 @@
           "options": {
             "label": "Actual",
             "order": 16,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1412,11 +1564,13 @@
           "options": {
             "label": "Actual vs Max",
             "order": 17,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "__name__",
               "errorColumn": ""
             }
@@ -1431,11 +1585,13 @@
           "options": {
             "label": "Actual vs Max",
             "order": 18,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "__name__",
               "errorColumn": ""
             }
@@ -1450,11 +1606,13 @@
           "options": {
             "label": "",
             "order": 19,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1469,11 +1627,13 @@
           "options": {
             "label": "",
             "order": 20,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1488,11 +1648,13 @@
           "options": {
             "label": "Actual",
             "order": 21,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1507,11 +1669,13 @@
           "options": {
             "label": "Actual",
             "order": 22,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1526,11 +1690,13 @@
           "options": {
             "label": "Actual",
             "order": 23,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1545,11 +1711,13 @@
           "options": {
             "label": "Actual",
             "order": 24,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1564,11 +1732,13 @@
           "options": {
             "label": "Actual",
             "order": 25,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1583,11 +1753,13 @@
           "options": {
             "label": "Actual",
             "order": 26,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1602,11 +1774,13 @@
           "options": {
             "label": "Actual vs Max",
             "order": 27,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1621,11 +1795,13 @@
           "options": {
             "label": "Actual",
             "order": 28,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1647,12 +1823,14 @@
           "options": {
             "label": "Actual",
             "order": 1,
-            "plot" : {
-              "xLabel" : "Timestamp",
+            "plot": {
+              "xLabel": "Timestamp",
               "yLabel": "value",
               "label": "Actual",
-              "x" : "Timestamp",
-              "y": ["value"],
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
               "groupBy": "hostname",
               "errorColumn": ""
             }
@@ -1686,13 +1864,13 @@
           "data_source_name": "Apica Monitoring"
         }
       },
-     {
-       "runtime": {
-         "query": "sum by (runtime) (target_info{ostype=~'linux|windows'})",
-         "name": "Runtime selection",
-         "data_source_name": "Apica Monitoring"
-       }
-     }
+      {
+        "runtime": {
+          "query": "sum by (runtime) (target_info{ostype=~'linux|windows'})",
+          "name": "Runtime selection",
+          "data_source_name": "Apica Monitoring"
+        }
+      }
     ]
   }
 }
