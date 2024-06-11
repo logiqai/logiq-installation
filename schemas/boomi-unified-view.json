@@ -539,7 +539,7 @@
           },
           "alert": {
             "active": "True",
-            "name": "Warn When Local Storage > 80%",
+            "name": "Warn When Local Storage Exceeds 80%",
             "options": {
               "alertType": "simple alert",
               "anomalySwitch": false,
