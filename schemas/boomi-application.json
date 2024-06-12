@@ -85,25 +85,6 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (hostname) (process_runtime_jvm_classes_current_loaded{hostname=~'.*'})&duration=1h&step=1m",
-          "chart_type": "line",
-          "name": "Loaded Classes Count",
-          "schema": "process_runtime_jvm_classes_current_loaded",
-          "options": {
-            "label": "Loaded Classes Count",
-            "order": 5,
-            "plot" : {
-              "xLabel" : "Timestamp",
-              "yLabel": "Count",
-              "x" : "Timestamp",
-              "y": ["value"],
-              "groupBy": "hostname",
-              "errorColumn": ""
-            }
-          },
-          "data_source_name": "Apica Monitoring"
-        },
-        {
           "query": "sum by (hostname) (open_fd_count{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Open File Descriptor Count",
@@ -625,12 +606,12 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (threads{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Jetty Threads",
           "schema": "",
           "options": {
-            "label": "Actual vs Max",
+            "label": "Actual",
             "order": 27,
             "plot" : {
               "xLabel" : "Timestamp",
@@ -644,7 +625,7 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "",
+          "query": "sum by (hostname) (queue_size{hostname=~'.*'})&duration=1h&step=5m",
           "chart_type": "line",
           "name": "Jetty Queue size",
           "schema": "",

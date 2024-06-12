@@ -347,28 +347,26 @@
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "sum by (__name__, hostname)({__name__=~'memory_available_bytes|memory_committed_bytes',ostype=~'linux|windows',hostname=~'.*'})&duration=1h&step=5m",
-          "chart_type": "line",
-          "name": "Machine Memory Utilisation (Actual vs Total)",
-          "schema": "system_cpu_load_average_5m",
+          "query": "sum by (hostname,status) (system_processes_count{ostype=~'linux|windows'})&duration=1.000h&step=1m",
+          "chart_type": "Table",
+          "name": "List of PID's",
+          "schema": "system_processes_count",
           "options": {
-            "label": "Actual vs Total",
-            "order": 5,
-            "plot": {
-              "xLabel": "Timestamp",
-              "yLabel": "Actual vs Total",
-              "x": "Timestamp",
-              "y": [
-                "value"
-              ],
-              "groupBy": "hostname",
+            "label": "Actual",
+            "order": 1,
+            "plot" : {
+              "xLabel" : "Timestamp",
+              "yLabel": "value",
+              "x" : "Timestamp",
+              "y": ["value"],
+              "groupBy": "",
               "errorColumn": ""
             }
           },
           "data_source_name": "Apica Monitoring"
         },
         {
-          "query": "100*sum by (hostname) (1-system_memory_utilization_ratio{ostype=~'linux|windows', hostname=~'.*',state='free'})&duration=1h&step=1m",
+          "query": "round((avg by (hostname) (irate(system_cpu_time_seconds_total{ostype=~'linux',hostname=~'.*',state='wait'}[5m]))) * 100,0.01)&duration=1h&step=1m",
           "chart_type": "line",
           "name": "Machine Memory Utilisation (%)",
           "schema": "system_cpu_load_average_5m",
