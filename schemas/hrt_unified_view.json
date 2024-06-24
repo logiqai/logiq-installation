@@ -1,0 +1,618 @@
+{
+  "tabs": [
+    {
+      "key": "overview",
+      "title": "Overview",
+      "order": "1",
+      "type": "metrics",
+      "queriesList": [
+        {
+          "query": "round( (System_Up_Time{hostname='WT3WE9N4PST3P'}) / (20000))",
+          "chart_type": "counter",
+          "name": "WT3W Uptime",
+          "schema": "System_Up_Time",
+          "options": {
+            "label": "Hours",
+            "upperLimit": "",
+            "order": 1,
+            "description": "Uptime (Hours)",
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "value",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "round( (System_Up_Time{hostname='SHAWVJENKINS01P'}) / (20000))",
+          "chart_type": "counter",
+          "name": "SHAW Uptime",
+          "schema": "System_Up_Time",
+          "options": {
+            "label": "Hours",
+            "upperLimit": "",
+            "order": 2,
+            "description": "Uptime (Hours)",
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "value",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Processes&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Processes",
+          "schema": "Processes",
+          "options": {
+            "label": "",
+            "order": 3,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "cpu",
+      "title": "CPU",
+      "type": "metrics",
+      "order": "2",
+      "queriesList": [
+        {
+          "query": "(Percent_Processor_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent Processor Time",
+          "schema": "Percent_Processor_Time",
+          "options": {
+            "label": "Percent Processor Time",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Percent_Idle_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent Idle Time",
+          "schema": "Percent_Idle_Time",
+          "options": {
+            "label": "Percent Idle Time",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }, 
+        {
+          "query": "(Percent_User_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent User Time",
+          "schema": "Percent_User_Time",
+          "options": {
+            "label": "Percent User Time",
+            "order": 3,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Percent_Privileged_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent Privileged Time",
+          "schema": "Percent_Privileged_Time",
+          "options": {
+            "label": "Percent Privileged Time",
+            "order": 4,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Percent_Interrupt_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent Interrupt Time",
+          "schema": "Percent_Interrupt_Time",
+          "options": {
+            "label": "Percent Interrupt Time",
+            "order": 5,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Percent_DPC_Time{input_metric_group='win_cpu', instance='0'})&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Percent DPC Time",
+          "schema": "Percent_DPC_Time",
+          "options": {
+            "label": "Percent DPC Time",
+            "order": 6,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "memory",
+      "title": "Memory",
+      "type": "metrics",
+      "order": "3",
+      "queriesList": [
+        {
+          "query": "(Available_Bytes{input_metric_group='win_mem'})/(1024*1024*1024)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Available Memory",
+          "schema": "Available_Bytes",
+          "options": {
+            "label": "Available Memory",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Committed_Bytes)/(1024*1024*1024)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Committed Memory",
+          "schema": "Committed_Bytes",
+          "options": {
+            "label": "Committed Memory",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Cache_Faults_persec)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Cache Faults Per Sec",
+          "schema": "Cache_Faults_persec",
+          "options": {
+            "label": "Cache Faults Per Sec",
+            "order": 3,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Demand_Zero_Faults_persec)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Demand Zero Faults Per Sec",
+          "schema": "Demand_Zero_Faults_persec",
+          "options": {
+            "label": "Demand Zero Faults Per Sec",
+            "order": 4,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Pages_persec)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Pages Per Sec",
+          "schema": "Pages_persec",
+          "options": {
+            "label": "Pages Per Sec",
+            "order": 5,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Page_Faults_persec)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Page Faults Per Sec",
+          "schema": "Page_Faults_persec",
+          "options": {
+            "label": "Page Faults Per Sec",
+            "order": 6,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "disk",
+      "title": "Disk",
+      "order": "4",
+      "queriesList": [
+        {
+          "query": "(Free_Megabytes{instance='D:'})/(1000)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Logical Disk Free Space (D:)",
+          "schema": "Free_Megabytes",
+          "options": {
+            "label": "Logical Disk Free Space (D:)",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Percent_Disk_Read_Time{instance='C:'}&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Logical Disk % Read Time",
+          "schema": "Percent_Disk_Read_Time",
+          "options": {
+            "label": "Logical Disk % Read Time",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Percent_Disk_Write_Time{instance='C:'}&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Logical Disk % Write Time",
+          "schema": "Percent_Disk_Write_Time",
+          "options": {
+            "label": "Logical Disk % Write Time",
+            "order": 3,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Percent_Disk_Read_Time{instance='b\"MCBDOg==\"'}&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Physical Disk % Read",
+          "schema": "Percent_Disk_Read_Time",
+          "options": {
+            "label": "Physical Disk % Read",
+            "order": 4,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Percent_Disk_Write_Time{instance='b\"MCBDOg==\"'}&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Physical Disk % Write",
+          "schema": "Percent_Disk_Write_Time",
+          "options": {
+            "label": "Physical Disk % Write",
+            "order": 5,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "(Free_Megabytes{instance='D:'})/(1000)&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Logical Disk Free Space (D:)",
+          "schema": "Free_Megabytes",
+          "options": {
+            "label": "Logical Disk Free Space (D:)",
+            "order": 6,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    },
+    {
+      "key": "network",
+      "title": "Network",
+      "type": "metrics",
+      "order": "5",
+      "queriesList": [
+        {
+          "query": "Packets_Outbound_Errors&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Outgoing Errors",
+          "schema": "Packets_Outbound_Errors",
+          "options": {
+            "label": "Packets Outgoing Errors",
+            "order": 1,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Packets_Received_Errors&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Incoming Errors",
+          "schema": "Packets_Received_Errors",
+          "options": {
+            "label": "Packets Incoming Errors",
+            "order": 2,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Packets_Outbound_Discarded&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Outbound Discarded",
+          "schema": "Packets_Outbound_Discarded",
+          "options": {
+            "label": "Packets Outbound Discarded",
+            "order": 3,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Packets_Received_Discarded&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Incoming Discarded",
+          "schema": "Packets_Received_Discarded",
+          "options": {
+            "label": "Packets Incoming Discarded",
+            "order": 4,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Packets_Sent_persec&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Sent Per Sec",
+          "schema": "Packets_Sent_persec",
+          "options": {
+            "label": "Packets Sent Per Sec",
+            "order": 5,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        },
+        {
+          "query": "Packets_Received_persec&duration=12h&step=5m",
+          "chart_type": "line",
+          "name": "Packets Received Per Sec",
+          "schema": "Packets_Received_persec",
+          "options": {
+            "label": "Packets Received Per Sec",
+            "order": 6,
+            "plot": {
+              "xLabel": "Timestamp",
+              "yLabel": "",
+              "x": "Timestamp",
+              "y": [
+                "value"
+              ],
+              "groupBy": "hostname",
+              "errorColumn": ""
+            }
+          },
+          "data_source_name": "Apica Monitoring"
+        }
+      ]
+    }
+  ],
+  "header": {
+    "dateTimeRange": true,
+    "dropdowns": []
+  }
+}
